@@ -18,8 +18,10 @@ namespace restlessmedia.Module
       {
         containerBuilder.Register(x => section).As<T>().SingleInstance();
       }
-
-      throw new ConfigurationErrorsException($"Configuration section found at '{path}' is not type of {nameof(T)}.");
+      else
+      {
+        throw new ConfigurationErrorsException($"Configuration section {section.GetType().FullName} found at '{path}' is not type of {typeof(T).FullName}.");
+      }
     }
   }
 }
