@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>restlessmedia.Module</id>
+    <version>0.1.0</version>
+    <title>restlessmedia.Module</title>
+    <authors>Phil Cooper</authors>
+    <owners>Phil Cooper</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Base module library.</description>
+    <copyright>Copyright restlessmedia 2019</copyright>
+    <tags></tags>
+  </metadata>
+</package>
