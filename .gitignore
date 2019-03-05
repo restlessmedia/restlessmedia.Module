@@ -4,3 +4,4 @@ restlessmedia.Module/bin
 restlessmedia.Module/obj
 .DS_Store
 .vs
+packages/**/*

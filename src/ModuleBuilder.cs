@@ -21,9 +21,9 @@ namespace restlessmedia.Module
     private static void RegisterComponents(ContainerBuilder containerBuilder)
     {
       // settings
-      containerBuilder.RegisterType<LicenseSettings>().As<ILicenseSettings>().SingleInstance();
-      containerBuilder.RegisterType<DatabaseSettings>().As<IDatabaseSettings>().SingleInstance();
-      containerBuilder.RegisterType<RoleSettings>().As<IRoleSettings>().SingleInstance();
+      containerBuilder.RegisterSettings<LicenseSettings>("restlessmedia/license", required: true);
+      containerBuilder.RegisterSettings<DatabaseSettings>("restlessmedia/database");
+      containerBuilder.RegisterSettings<RoleSettings>("restlessmedia/role");
 
       // services
       containerBuilder.RegisterType<AuthService>().As<IAuthService>().SingleInstance();
