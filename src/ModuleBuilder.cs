@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using restlessmedia.Module.Configuration;
+using restlessmedia.Module.Data;
 using restlessmedia.Module.Security;
 using restlessmedia.Module.Security.Data;
 using System;
@@ -44,6 +45,9 @@ namespace restlessmedia.Module
       containerBuilder.RegisterSettings<ILicenseSettings>("restlessmedia/license", required: true);
       containerBuilder.RegisterSettings<IDatabaseSettings>("restlessmedia/database", required: true);
       containerBuilder.RegisterSettings<IRoleSettings>("restlessmedia/role");
+
+      // context
+      containerBuilder.RegisterType<DataContext>().As<IDataContext>().SingleInstance();
 
       // services
       containerBuilder.RegisterType<AuthService>().As<IAuthService>().SingleInstance();

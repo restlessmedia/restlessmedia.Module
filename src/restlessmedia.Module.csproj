@@ -86,6 +86,7 @@
     <Compile Include="Configuration\LicenseSettings.cs" />
     <Compile Include="Configuration\RoleSettings.cs" />
     <Compile Include="Configuration\TypedCollection.cs" />
+    <Compile Include="Data\DataContext.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityType.cs" />
     <Compile Include="Address\IAddress.cs" />
