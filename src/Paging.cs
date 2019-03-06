@@ -113,6 +113,11 @@ namespace restlessmedia.Module
     }
 
     /// <summary>
+    /// Beta... use delegates to get enable use to use this class with DisplayFor<>() but inject stuff into it.
+    /// </summary>
+    public Func<int, string> RenderUrl;
+
+    /// <summary>
     /// Paging counts are only calculated once when the totalcount is set - this ecalculates the paging counts in case they have changed.
     /// </summary>
     private void Recalculate()
