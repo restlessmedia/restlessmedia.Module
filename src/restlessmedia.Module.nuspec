@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>restlessmedia.Module</id>
+    <id>$title$</id>
     <version>$version$</version>
-    <title>restlessmedia.Module</title>
+    <title>$title$</title>
     <authors>Phil Cooper</authors>
     <owners>Phil Cooper</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>

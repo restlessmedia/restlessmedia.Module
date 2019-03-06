@@ -52,7 +52,7 @@ namespace restlessmedia.Module
           continue;
         }
 
-        Type moduleType = assembly.GetTypes().SingleOrDefault(x => x.IsAssignableFrom(abstractModuleType));
+        Type moduleType = GetTypes(assembly).SingleOrDefault(x => x.IsAssignableFrom(abstractModuleType));
 
         if (moduleType == null)
         {
@@ -60,6 +60,18 @@ namespace restlessmedia.Module
         }
 
         RegisterModule(containerBuilder, moduleType);
+      }
+    }
+
+    private static IEnumerable<Type> GetTypes(Assembly assembly)
+    {
+      try
+      {
+        return assembly.GetTypes();
+      }
+      catch (ReflectionTypeLoadException e)
+      {
+        return e.Types;
       }
     }
 
