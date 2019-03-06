@@ -55,7 +55,7 @@ namespace restlessmedia.Module
 
         Trace.TraceInformation($"ModuleBuilder scanning {assembly.FullName} for {abstractModuleType.Name} types.");
 
-        Type moduleType = GetAssemblyTypes(assembly).SingleOrDefault(x => x.IsAssignableFrom(abstractModuleType));
+        Type moduleType = GetAssemblyTypes(assembly).SingleOrDefault(x => x != null && x.IsAssignableFrom(abstractModuleType));
 
         if (moduleType == null)
         {
