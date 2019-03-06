@@ -25,7 +25,7 @@ namespace restlessmedia.Module
     {
       Type abstractModuleType = typeof(IModule);
       Trace.TraceInformation($"ModuleBuilder scanning {assembly.FullName} for {abstractModuleType.Name} types.");
-      foreach (Type moduleType in GetAssemblyTypes(assembly).Where(x => x != null && abstractModuleType.IsAssignableFrom(x)))
+      foreach (Type moduleType in GetAssemblyTypes(assembly).Where(x => x != null && x != abstractModuleType && abstractModuleType.IsAssignableFrom(x)))
       {
         RegisterModule(containerBuilder, moduleType);
       }
