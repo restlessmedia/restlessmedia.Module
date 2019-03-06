@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "restlessmedia.Module", "src\restlessmedia.Module.csproj", "{5D493AD0-1442-495A-AFF9-9EE5F740430B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "restlessmedia.Module.UnitTest", "restlessmedia.Module.UnitTest\restlessmedia.Module.UnitTest.csproj", "{478A5392-FB2B-4595-A044-E4272DE70195}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{5D493AD0-1442-495A-AFF9-9EE5F740430B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D493AD0-1442-495A-AFF9-9EE5F740430B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D493AD0-1442-495A-AFF9-9EE5F740430B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{478A5392-FB2B-4595-A044-E4272DE70195}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{478A5392-FB2B-4595-A044-E4272DE70195}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{478A5392-FB2B-4595-A044-E4272DE70195}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{478A5392-FB2B-4595-A044-E4272DE70195}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

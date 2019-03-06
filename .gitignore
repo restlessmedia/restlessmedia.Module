@@ -2,6 +2,8 @@ src/bin
 src/obj
 restlessmedia.Module/bin
 restlessmedia.Module/obj
+restlessmedia.Module.UnitTest/bin
+restlessmedia.Module.UnitTest/obj
 .DS_Store
 .vs
 packages/**/*

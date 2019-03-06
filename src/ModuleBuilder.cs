@@ -16,7 +16,26 @@ namespace restlessmedia.Module
     public static void RegisterModules(ContainerBuilder containerBuilder)
     {
       RegisterComponents(containerBuilder);
-      RegisterAssemblies(containerBuilder);
+
+      IEnumerable<Assembly> assemblies = BuildManager.GetReferencedAssemblies().Cast<Assembly>();
+      RegisterModules(containerBuilder, assemblies);
+    }
+
+    public static void RegisterModules(ContainerBuilder containerBuilder, Assembly assembly)
+    {
+      Type abstractModuleType = typeof(IModule);
+      Trace.TraceInformation($"ModuleBuilder scanning {assembly.FullName} for {abstractModuleType.Name} types.");
+      foreach (Type moduleType in GetAssemblyTypes(assembly).Where(x => x != null && abstractModuleType.IsAssignableFrom(x)))
+      {
+        RegisterModule(containerBuilder, moduleType);
+      }
+    }
+
+    public static void RegisterModule(ContainerBuilder containerBuilder, Type type)
+    {
+      Trace.TraceInformation($"Registering module components for {type.FullName}.");
+      IModule module = Activator.CreateInstance(type) as IModule;
+      module.RegisterComponents(containerBuilder);
     }
 
     private static void RegisterComponents(ContainerBuilder containerBuilder)
@@ -35,34 +54,11 @@ namespace restlessmedia.Module
       containerBuilder.RegisterType<AuthDataProvider>().As<IAuthDataProvider>().SingleInstance();
     }
 
-    private static void RegisterAssemblies(ContainerBuilder containerBuilder)
+    private static void RegisterModules(ContainerBuilder containerBuilder, IEnumerable<Assembly> assemblies)
     {
-      IEnumerable<Assembly> assemblies = BuildManager.GetReferencedAssemblies().Cast<Assembly>();
-      RegisterAssemblies(containerBuilder, assemblies);
-    }
-
-    private static void RegisterAssemblies(ContainerBuilder containerBuilder, IEnumerable<Assembly> assemblies)
-    {
-      Type abstractModuleType = typeof(IModule);
-      Assembly currentAssembly = Assembly.GetExecutingAssembly();
-
       foreach (Assembly assembly in BuildManager.GetReferencedAssemblies().Cast<Assembly>())
       {
-        if (assembly == currentAssembly)
-        {
-          continue;
-        }
-
-        Trace.TraceInformation($"ModuleBuilder scanning {assembly.FullName} for {abstractModuleType.Name} types.");
-
-        Type moduleType = GetAssemblyTypes(assembly).SingleOrDefault(x => x != null && x.IsAssignableFrom(abstractModuleType));
-
-        if (moduleType == null)
-        {
-          continue;
-        }
-
-        RegisterModule(containerBuilder, moduleType);
+        RegisterModules(containerBuilder, assembly);
       }
     }
 
@@ -76,13 +72,6 @@ namespace restlessmedia.Module
       {
         return e.Types;
       }
-    }
-
-    private static void RegisterModule(ContainerBuilder containerBuilder, Type type)
-    {
-      Trace.TraceInformation($"Registering module components for {type.FullName}.");
-      IModule module = Activator.CreateInstance(type) as IModule;
-      module.RegisterComponents(containerBuilder);
     }
   }
 }
