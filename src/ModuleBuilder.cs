@@ -4,6 +4,7 @@ using restlessmedia.Module.Security;
 using restlessmedia.Module.Security.Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Web.Compilation;
@@ -52,7 +53,9 @@ namespace restlessmedia.Module
           continue;
         }
 
-        Type moduleType = GetTypes(assembly).SingleOrDefault(x => x.IsAssignableFrom(abstractModuleType));
+        Trace.TraceInformation($"ModuleBuilder scanning {assembly.FullName} for {abstractModuleType.Name} types.");
+
+        Type moduleType = GetAssemblyTypes(assembly).SingleOrDefault(x => x.IsAssignableFrom(abstractModuleType));
 
         if (moduleType == null)
         {
@@ -63,7 +66,7 @@ namespace restlessmedia.Module
       }
     }
 
-    private static IEnumerable<Type> GetTypes(Assembly assembly)
+    private static IEnumerable<Type> GetAssemblyTypes(Assembly assembly)
     {
       try
       {
@@ -77,6 +80,7 @@ namespace restlessmedia.Module
 
     private static void RegisterModule(ContainerBuilder containerBuilder, Type type)
     {
+      Trace.TraceInformation($"Registering module components for {type.FullName}.");
       IModule module = Activator.CreateInstance(type) as IModule;
       module.RegisterComponents(containerBuilder);
     }
