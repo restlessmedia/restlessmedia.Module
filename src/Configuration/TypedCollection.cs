@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace restlessmedia.Module.Configuration
 {
-  internal abstract class TypedCollection<T> : ConfigurationElementCollection
+  public abstract class TypedCollection<T> : ConfigurationElementCollection
     where T : ConfigurationElement, new()
   {
     public override ConfigurationElementCollectionType CollectionType
