@@ -34,7 +34,6 @@ namespace restlessmedia.Module.Data
       return _licenseId.Value;
     }
 
-
     public static void SetContext(IDbConnection connection, ILicenseSettings licenseSettings)
     {
       const string sql = "dbo.SPSetLicenseContext @licenseId";

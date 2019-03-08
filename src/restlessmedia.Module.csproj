@@ -55,8 +55,8 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="SqlBuilder, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SqlBuilder.1.7.0\lib\net452\SqlBuilder.dll</HintPath>
+    <Reference Include="SqlBuilder, Version=1.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SqlBuilder.1.10.0\lib\net452\SqlBuilder.dll</HintPath>
     </Reference>
     <Reference Include="SqlBuilder.DataServices, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SqlBuilder.DataServices.1.1.0\lib\net452\SqlBuilder.DataServices.dll</HintPath>
@@ -92,11 +92,12 @@
     <Compile Include="EntityType.cs" />
     <Compile Include="Address\IAddress.cs" />
     <Compile Include="Address\IAddressExtensions.cs" />
+    <Compile Include="Extensions\SelectExtensions.cs" />
     <Compile Include="ICategory.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="IgnoreAttribute.cs" />
     <Compile Include="Address\Marker.cs" />
-    <Compile Include="IModuleExtensions.cs" />
+    <Compile Include="Extensions\IModuleExtensions.cs" />
     <Compile Include="LicensedEntity.cs" />
     <Compile Include="LicenseException.cs" />
     <Compile Include="ModuleBuilder.cs" />
