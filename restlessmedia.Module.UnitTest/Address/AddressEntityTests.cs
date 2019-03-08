@@ -16,7 +16,7 @@ namespace restlessmedia.UnitTest.Abstractions.Models
         Address01 = "Whiston Road",
         Address02 = "Haggerston",
         PostCode = "E2 8SF"
-      }.ToVague().ShouldEqual("asdasd");
+      }.ToVague().ShouldEqual("Whiston Road, Haggerston, E2 8SF");
     }
   }
 }
