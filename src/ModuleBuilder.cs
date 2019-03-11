@@ -51,11 +51,13 @@ namespace restlessmedia.Module
 
       // services
       containerBuilder.RegisterType<AuthService>().As<IAuthService>().SingleInstance();
+      containerBuilder.RegisterType<EntityService>().As<IEntityService>().SingleInstance();
 
       // providers
       containerBuilder.RegisterType<SecurityDataProvider>().As<ISecurityDataProvider>().SingleInstance();
       containerBuilder.RegisterType<ProfileDataProvider>().As<IProfileDataProvider>().SingleInstance();
       containerBuilder.RegisterType<AuthDataProvider>().As<IAuthDataProvider>().SingleInstance();
+      containerBuilder.RegisterType<EntityDataProvider>().As<IEntityDataProvider>().SingleInstance(); 
     }
 
     private static void RegisterModules(ContainerBuilder containerBuilder, IEnumerable<Assembly> assemblies)
