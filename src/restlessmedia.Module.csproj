@@ -61,10 +61,14 @@
     <Reference Include="SqlBuilder.DataServices, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\SqlBuilder.DataServices.1.1.0\lib\net452\SqlBuilder.DataServices.dll</HintPath>
     </Reference>
+    <Reference Include="StackExchange.Redis.StrongName, Version=1.2.6.0, Culture=neutral, PublicKeyToken=c219ff1ca8c2ce46, processorArchitecture=MSIL">
+      <HintPath>..\packages\StackExchange.Redis.StrongName.1.2.6\lib\net45\StackExchange.Redis.StrongName.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -77,11 +81,17 @@
   <ItemGroup>
     <Compile Include="Address\AddressEntity.cs" />
     <Compile Include="Address\AddressType.cs" />
+    <Compile Include="Caching\CacheProviderBase.cs" />
+    <Compile Include="Caching\HttpCacheProvider.cs" />
+    <Compile Include="Caching\RedisCacheProvider.cs" />
     <Compile Include="Configuration\ActivityItem.cs" />
     <Compile Include="Configuration\ActivityItemCollection.cs" />
     <Compile Include="Configuration\DatabaseSettings.cs" />
+    <Compile Include="Configuration\EndPoint.cs" />
+    <Compile Include="Configuration\EndPointCollection.cs" />
     <Compile Include="Configuration\Feature.cs" />
     <Compile Include="Configuration\FeatureCollection.cs" />
+    <Compile Include="Configuration\ICacheSettings.cs" />
     <Compile Include="Configuration\IRoleSettings.cs" />
     <Compile Include="Configuration\LicenseSettings.cs" />
     <Compile Include="Configuration\RoleSettings.cs" />
@@ -97,16 +107,19 @@
     <Compile Include="Address\IAddress.cs" />
     <Compile Include="Address\IAddressExtensions.cs" />
     <Compile Include="Extensions\SelectExtensions.cs" />
+    <Compile Include="ICacheProvider.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="IEntityService.cs" />
     <Compile Include="IgnoreAttribute.cs" />
     <Compile Include="Address\Marker.cs" />
     <Compile Include="Extensions\IModuleExtensions.cs" />
+    <Compile Include="IPubSubProvider.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="LicensedEntity.cs" />
     <Compile Include="LicenseException.cs" />
     <Compile Include="ModuleBuilder.cs" />
     <Compile Include="MoveDirection.cs" />
+    <Compile Include="PubSubProvider.cs" />
     <Compile Include="Security\AccessStatus.cs" />
     <Compile Include="Configuration\IDatabaseSettings.cs" />
     <Compile Include="Configuration\IFeature.cs" />

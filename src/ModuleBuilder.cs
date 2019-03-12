@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using restlessmedia.Module.Caching;
 using restlessmedia.Module.Configuration;
 using restlessmedia.Module.Data;
 using restlessmedia.Module.Security;
@@ -41,23 +42,31 @@ namespace restlessmedia.Module
 
     private static void RegisterComponents(ContainerBuilder containerBuilder)
     {
-      // settings
+      #region settings
       containerBuilder.RegisterSettings<ILicenseSettings>("restlessmedia/license", required: true);
       containerBuilder.RegisterSettings<IDatabaseSettings>("restlessmedia/database", required: true);
       containerBuilder.RegisterSettings<IRoleSettings>("restlessmedia/role");
+      #endregion
 
-      // context
+      #region contexts
       containerBuilder.RegisterType<DataContext>().As<IDataContext>().SingleInstance();
+      #endregion
 
-      // services
+      #region services
       containerBuilder.RegisterType<AuthService>().As<IAuthService>().SingleInstance();
       containerBuilder.RegisterType<EntityService>().As<IEntityService>().SingleInstance();
+      #endregion
 
-      // providers
+      #region providers
       containerBuilder.RegisterType<SecurityDataProvider>().As<ISecurityDataProvider>().SingleInstance();
       containerBuilder.RegisterType<ProfileDataProvider>().As<IProfileDataProvider>().SingleInstance();
       containerBuilder.RegisterType<AuthDataProvider>().As<IAuthDataProvider>().SingleInstance();
-      containerBuilder.RegisterType<EntityDataProvider>().As<IEntityDataProvider>().SingleInstance(); 
+      containerBuilder.RegisterType<EntityDataProvider>().As<IEntityDataProvider>().SingleInstance();
+      containerBuilder.RegisterType<PubSubProvider>().As<IPubSubProvider>().SingleInstance();
+
+      // this is the default cache provider, most applications override with redis cache which is done via json config
+      containerBuilder.RegisterType<HttpCacheProvider>().As<ICacheProvider>().SingleInstance();
+      #endregion
     }
 
     private static void RegisterModules(ContainerBuilder containerBuilder, IEnumerable<Assembly> assemblies)
