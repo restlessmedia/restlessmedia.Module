@@ -46,6 +46,7 @@ namespace restlessmedia.Module
       containerBuilder.RegisterSettings<ILicenseSettings>("restlessmedia/license", required: true);
       containerBuilder.RegisterSettings<IDatabaseSettings>("restlessmedia/database", required: true);
       containerBuilder.RegisterSettings<IRoleSettings>("restlessmedia/role");
+      containerBuilder.RegisterSettings<ICacheSettings>("restlessmedia/cache");
       #endregion
 
       #region contexts
