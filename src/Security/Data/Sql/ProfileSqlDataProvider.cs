@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using restlessmedia.Module.Address;
+using restlessmedia.Module.Data;
 using SqlBuilder.DataServices;
 using System.Collections.Generic;
 using System.Configuration;

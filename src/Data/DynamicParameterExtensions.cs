@@ -2,7 +2,7 @@
 using restlessmedia.Module.Address;
 using System.Data;
 
-namespace restlessmedia.Module.Security.Data
+namespace restlessmedia.Module.Data
 {
   public static class DynamicParameterExtensions
   {
