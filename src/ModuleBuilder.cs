@@ -2,8 +2,6 @@
 using restlessmedia.Module.Caching;
 using restlessmedia.Module.Configuration;
 using restlessmedia.Module.Data;
-using restlessmedia.Module.Security;
-using restlessmedia.Module.Security.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -45,7 +43,6 @@ namespace restlessmedia.Module
       #region settings
       containerBuilder.RegisterSettings<ILicenseSettings>("restlessmedia/license", required: true);
       containerBuilder.RegisterSettings<IDatabaseSettings>("restlessmedia/database", required: true);
-      containerBuilder.RegisterSettings<IRoleSettings>("restlessmedia/role");
       containerBuilder.RegisterSettings<ICacheSettings>("restlessmedia/cache");
       #endregion
 
@@ -54,15 +51,10 @@ namespace restlessmedia.Module
       #endregion
 
       #region services
-      containerBuilder.RegisterType<AuthService>().As<IAuthService>().SingleInstance();
       containerBuilder.RegisterType<EntityService>().As<IEntityService>().SingleInstance();
       #endregion
 
       #region providers
-      containerBuilder.RegisterType<SecurityDataProvider>().As<ISecurityDataProvider>().SingleInstance();
-      containerBuilder.RegisterType<ProfileDataProvider>().As<IProfileDataProvider>().SingleInstance();
-      containerBuilder.RegisterType<AuthDataProvider>().As<IAuthDataProvider>().SingleInstance();
-      containerBuilder.RegisterType<EntityDataProvider>().As<IEntityDataProvider>().SingleInstance();
       containerBuilder.RegisterType<PubSubProvider>().As<IPubSubProvider>().SingleInstance();
 
       // this is the default cache provider, most applications override with redis cache which is done via json config

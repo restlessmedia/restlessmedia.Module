@@ -1,5 +1,4 @@
-﻿using restlessmedia.Module.Configuration;
-using System.Configuration;
+﻿using System.Configuration;
 
 namespace restlessmedia.Module.Configuration
 {

@@ -1,7 +1,7 @@
-﻿using restlessmedia.Module.Data;
-using SqlBuilder.DataServices;
+﻿using SqlBuilder.DataServices;
+using System.Data;
 
-namespace restlessmedia.Module.Security.Data.Sql
+namespace restlessmedia.Module.Data.Sql
 {
   public abstract class SqlDataProviderBase : SqlAccess
   {
@@ -12,5 +12,10 @@ namespace restlessmedia.Module.Security.Data.Sql
     }
 
     public IDataContext DataContext { get; private set; }
+
+    protected ModelCollection<T> ModelQuery<T>(string commandName, dynamic param = null)
+    {
+      return new ModelCollection<T>(Query<T>(commandName, param));
+    }
   }
 }
