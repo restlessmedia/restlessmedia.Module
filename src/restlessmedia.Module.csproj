@@ -82,8 +82,6 @@
     <Compile Include="Caching\CacheProviderBase.cs" />
     <Compile Include="Caching\HttpCacheProvider.cs" />
     <Compile Include="Caching\RedisCacheProvider.cs" />
-    <Compile Include="Configuration\ActivityItem.cs" />
-    <Compile Include="Configuration\ActivityItemCollection.cs" />
     <Compile Include="Configuration\CacheSettings.cs" />
     <Compile Include="Configuration\DatabaseSettings.cs" />
     <Compile Include="Configuration\EndPoint.cs" />
