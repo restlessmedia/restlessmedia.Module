@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertExtensions.cs" />
+    <Compile Include="Extensions\ExceptionExtensionsTests.cs" />
     <Compile Include="Extensions\SelectExtensionsTests.cs" />
     <Compile Include="ModuleBuilderTests.cs" />
     <Compile Include="PagingTests.cs" />

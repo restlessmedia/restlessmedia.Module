@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
 
-namespace restlessmedia.Module.Extensions
+namespace System
 {
   public static class ExceptionExtensions
   {
@@ -13,17 +13,17 @@ namespace restlessmedia.Module.Extensions
     /// <returns></returns>
     public static string Messages(this Exception exception, string separator = " / ")
     {
-      ArrayList messages = new ArrayList();
-      messages.Add(exception.Message);
-      Exception inner = exception.InnerException;
+      return string.Join(separator, AllMessages(exception));
+    }
 
+    public static IEnumerable<string> AllMessages(this Exception exception)
+    {
+      Exception inner = exception;
       while (inner != null)
       {
-        messages.Add(inner.Message);
+        yield return inner.Message;
         inner = inner.InnerException;
       }
-
-      return string.Join(separator, messages.ToArray());
     }
   }
 }
