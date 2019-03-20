@@ -131,6 +131,7 @@
     <Compile Include="Data\Sql\UDTBase.cs" />
     <Compile Include="Data\Sql\UDTHelper.cs" />
     <Compile Include="Data\Sql\UDTInt.cs" />
+    <Compile Include="UrlHelper.cs" />
     <Compile Include="ValidationHelper.cs" />
   </ItemGroup>
   <ItemGroup>
