@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\BindAsAttribute.cs" />
     <Compile Include="Caching\CacheProviderBase.cs" />
     <Compile Include="Caching\HttpCacheProvider.cs" />
     <Compile Include="Caching\RedisCacheProvider.cs" />

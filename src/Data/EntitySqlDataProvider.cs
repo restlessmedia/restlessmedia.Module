@@ -7,8 +7,7 @@ namespace restlessmedia.Module.Data
   public class EntitySqlDataProvider : SqlDataProviderBase
   {
     public EntitySqlDataProvider(IDataContext context)
-      : base(context)
-    { }
+      : base(context) { }
 
     public byte GetNextRank(EntityType sourceType, EntityType targetType, int sourceEntityId)
     {
