@@ -76,6 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\AttributeHelper.cs" />
     <Compile Include="Attributes\BindAsAttribute.cs" />
     <Compile Include="Caching\CacheProviderBase.cs" />
     <Compile Include="Caching\HttpCacheProvider.cs" />
