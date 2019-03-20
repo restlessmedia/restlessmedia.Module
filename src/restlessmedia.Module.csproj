@@ -85,6 +85,11 @@
     <Compile Include="Configuration\ICacheSettings.cs" />
     <Compile Include="Configuration\LicenseSettings.cs" />
     <Compile Include="Configuration\TypedCollection.cs" />
+    <Compile Include="DataAnnotations\BooleanMustBeTrueAttribute.cs" />
+    <Compile Include="DataAnnotations\EmailAttribute.cs" />
+    <Compile Include="DataAnnotations\PostCodeAttribute.cs" />
+    <Compile Include="DataAnnotations\TelephoneNumber.cs" />
+    <Compile Include="DataAnnotations\UrlAttribute.cs" />
     <Compile Include="Data\DataContext.cs" />
     <Compile Include="Data\EntityDataProvider.cs" />
     <Compile Include="Data\EntitySqlDataProvider.cs" />
@@ -126,6 +131,7 @@
     <Compile Include="Data\Sql\UDTBase.cs" />
     <Compile Include="Data\Sql\UDTHelper.cs" />
     <Compile Include="Data\Sql\UDTInt.cs" />
+    <Compile Include="ValidationHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
