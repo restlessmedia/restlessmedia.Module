@@ -119,6 +119,7 @@
     <Compile Include="LicensedEntity.cs" />
     <Compile Include="LicenseException.cs" />
     <Compile Include="ModuleBuilder.cs" />
+    <Compile Include="ModuleLoader.cs" />
     <Compile Include="MoveDirection.cs" />
     <Compile Include="PubSubProvider.cs" />
     <Compile Include="Configuration\IDatabaseSettings.cs" />

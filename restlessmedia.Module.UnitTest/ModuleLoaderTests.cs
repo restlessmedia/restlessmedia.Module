@@ -6,7 +6,7 @@ using System.Reflection;
 namespace restlessmedia.Module.UnitTest
 {
   [TestClass]
-  public class ModuleBuilderTests
+  public class ModuleLoaderTests
   {
     [TestMethod]
     public void RegisterModules_finds_modules_in_current_asembly()
@@ -15,11 +15,14 @@ namespace restlessmedia.Module.UnitTest
       TestAssert testAssert = A.Fake<TestAssert>();
       containerBuilder.RegisterCallback(x => testAssert.Call());
 
-      ModuleBuilder.RegisterModules(containerBuilder, Assembly.GetExecutingAssembly());
+      ModuleLoader<IModule>.Load(Assembly.GetExecutingAssembly(), module =>
+      {
+        testAssert.Call();
+      });
       
       containerBuilder.Build();
 
-      A.CallTo(() => testAssert.Call()).MustHaveHappened();
+      A.CallTo(() => testAssert.Call()).MustHaveHappenedOnceExactly();
     }
 
     public class TestModule : IModule
