@@ -13,15 +13,13 @@ namespace restlessmedia.Module.UnitTest
     {
       ContainerBuilder containerBuilder = new ContainerBuilder();
       TestAssert testAssert = A.Fake<TestAssert>();
-      containerBuilder.RegisterCallback(x => testAssert.Call());
 
       ModuleLoader<IModule>.Load(Assembly.GetExecutingAssembly(), module =>
       {
+        module.IsA<TestModule>();
         testAssert.Call();
       });
       
-      containerBuilder.Build();
-
       A.CallTo(() => testAssert.Call()).MustHaveHappenedOnceExactly();
     }
 
