@@ -16,9 +16,9 @@ namespace restlessmedia.Module
   {
     public static void Load(Action<TModule> factory)
     {
-      foreach (Assembly assembly in BuildManager.GetReferencedAssemblies().Cast<Assembly>())
+      foreach (TModule module in FindModules())
       {
-        Load(assembly, factory);
+        factory(module);
       }
     }
 
@@ -30,7 +30,12 @@ namespace restlessmedia.Module
       }
     }
 
-    private static IEnumerable<TModule> FindModules(Assembly assembly)
+    public static IEnumerable<TModule> FindModules()
+    {
+      return BuildManager.GetReferencedAssemblies().Cast<Assembly>().SelectMany(assembly => FindModules(assembly));
+    }
+
+    public static IEnumerable<TModule> FindModules(Assembly assembly)
     {
       Type abstractModuleType = typeof(TModule);
       Trace.TraceInformation($"{abstractModuleType.FullName} module loader scanning {assembly.FullName} for {abstractModuleType.Name} types.");
