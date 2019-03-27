@@ -5,6 +5,7 @@ nuget:
   account_feed: true
   project_feed: true
 before_build:
+- cmd: nuget sources
 - cmd: nuget restore
 build:
   project: restlessmedia.Module.sln
