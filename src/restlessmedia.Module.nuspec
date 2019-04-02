@@ -10,9 +10,9 @@
     <description>Base module library.</description>
     <copyright>Copyright restlessmedia 2019</copyright>
     <tags></tags>
+    <frameworkAssemblies>
+      <!-- required for stackexchange.redis -->
+      <frameworkAssembly assemblyName="System.IO.Compression"  />
+    </frameworkAssemblies>
   </metadata>
-  <frameworkAssemblies>
-    <!-- required for stackexchange.redis -->
-    <frameworkAssembly assemblyName="System.IO.Compression"  />
-  </frameworkAssemblies>
 </package>
