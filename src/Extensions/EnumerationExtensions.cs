@@ -17,7 +17,12 @@ namespace System
     {
       FieldInfo field = value.GetType().GetField(value.ToString());
       DescriptionAttribute attribute = Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) as DescriptionAttribute;
-      return attribute == null ? value.ToString() : attribute.Description;
+      if (attribute != null)
+      {
+        return attribute.Description;
+      }
+
+      return value.ToString();
     }
   }
 }
