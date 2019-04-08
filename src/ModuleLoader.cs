@@ -54,6 +54,14 @@ namespace restlessmedia.Module
       }
       catch (ReflectionTypeLoadException e)
       {
+        if (e.LoaderExceptions != null && e.LoaderExceptions.Length > 0)
+        {
+          Trace.TraceError($"{nameof(ModuleLoader<TModule>)} caught exception for assembly {assembly.FullName}. {string.Join(", ", e.LoaderExceptions.Select(x => x.Message))}");
+        }
+        else
+        {
+          Trace.TraceError($"{nameof(ModuleLoader<TModule>)} caught exception for assembly {assembly.FullName}.");
+        }
         return e.Types;
       }
     }
