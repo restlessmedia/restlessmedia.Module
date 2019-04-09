@@ -110,6 +110,7 @@
     <Compile Include="Configuration\ICacheSettings.cs" />
     <Compile Include="Configuration\LicenseSettings.cs" />
     <Compile Include="Configuration\TypedCollection.cs" />
+    <Compile Include="ConnectionFactory.cs" />
     <Compile Include="DataAnnotations\BooleanMustBeTrueAttribute.cs" />
     <Compile Include="DataAnnotations\EmailAttribute.cs" />
     <Compile Include="DataAnnotations\PostCodeAttribute.cs" />
