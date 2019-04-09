@@ -9,19 +9,22 @@ namespace restlessmedia.Module
     {
       object section = ConfigurationManager.GetSection(path);
 
-      if (section == null && required)
+      if (section == null)
       {
-        throw new ConfigurationErrorsException($"Required configuration section '{path}' not found.");
+        if (!required)
+        {
+          return;
+        }
+
+        throw new ConfigurationErrorsException($"Required configuration section '{path}' not found and is marked as required.");
       }
 
-      if (section is T)
-      {
-        containerBuilder.Register(x => section).As<T>().SingleInstance();
-      }
-      else
+      if (!(section is T))
       {
         throw new ConfigurationErrorsException($"Configuration section {section.GetType().FullName} found at '{path}' is not type of {typeof(T).FullName}.");
       }
+
+      containerBuilder.Register(x => section).As<T>().SingleInstance();
     }
   }
 }
