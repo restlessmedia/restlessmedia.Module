@@ -2,6 +2,7 @@
 using restlessmedia.Module.Caching;
 using restlessmedia.Module.Configuration;
 using restlessmedia.Module.Data;
+using SqlBuilder.DataServices;
 
 namespace restlessmedia.Module
 {
@@ -22,6 +23,8 @@ namespace restlessmedia.Module
       #endregion
 
       #region contexts
+      containerBuilder.RegisterType<ConnectionFactory>().As<IConnectionFactory>().SingleInstance();
+      containerBuilder.RegisterType<SqlRetry>().As<IRetry>().SingleInstance();
       containerBuilder.RegisterType<DataContext>().As<IDataContext>().SingleInstance();
       #endregion
 
