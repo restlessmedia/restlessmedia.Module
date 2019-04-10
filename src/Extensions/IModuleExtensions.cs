@@ -11,15 +11,12 @@ namespace restlessmedia.Module
 
       if (section == null)
       {
-        if (!required)
+        if (required)
         {
-          return;
+          throw new ConfigurationErrorsException($"Required configuration section '{path}' not found and is marked as required.");
         }
-
-        throw new ConfigurationErrorsException($"Required configuration section '{path}' not found and is marked as required.");
       }
-
-      if (!(section is T))
+      else if (!(section is T))
       {
         throw new ConfigurationErrorsException($"Configuration section {section.GetType().FullName} found at '{path}' is not type of {typeof(T).FullName}.");
       }
