@@ -8,7 +8,17 @@ namespace SqlBuilder
   {
     public static void WithLicenseId(this Select select, IDbConnection connection, ILicenseSettings licenseSettings)
     {
-      select.Where("LicenseId", LicenseHelper.GetLicenseId(connection, licenseSettings));
+      select.Where(_licenseColumnName, LicenseHelper.GetLicenseId(connection, licenseSettings));
     }
+
+    public static void WithLicenseId(this Select select, IDataContext dataContext)
+    {
+      using (IDbConnection connection = dataContext.ConnectionFactory.CreateConnection(true))
+      {
+        WithLicenseId(select, connection, dataContext.LicenseSettings);
+      }
+    }
+
+    private const string _licenseColumnName = "LicenseId";
   }
 }
