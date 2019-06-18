@@ -32,15 +32,17 @@ namespace restlessmedia.Module
     /// <param name="predicate"></param>
     /// <param name="whenTrue"></param>
     /// <param name="whenFalse"></param>
-    public static void RegisterWhen<T>(this ContainerBuilder containerBuilder, Func<IComponentRegistry, bool> predicate, Func<T> whenTrue, Func<T> whenFalse)
+    public static IRegistrationBuilder<T, SimpleActivatorData, SingleRegistrationStyle> RegisterWhen<T>(this ContainerBuilder containerBuilder, Func<IComponentRegistry, bool> predicate, Func<IComponentContext, T> whenTrue, Func<IComponentContext, T> whenFalse)
     {
-      containerBuilder.Register(x => whenTrue())
+      IRegistrationBuilder<T, SimpleActivatorData, SingleRegistrationStyle> registrationBuilder = containerBuilder.Register(whenTrue)
         .OnlyIf(x => predicate(x))
         .As<T>();
 
-      containerBuilder.Register(x => whenFalse())
+      registrationBuilder = containerBuilder.Register(whenFalse)
         .OnlyIf(x => !predicate(x))
         .As<T>();
+
+      return registrationBuilder;
     }
 
     public static void RegisterSettings<T>(this ContainerBuilder containerBuilder, string path, T defaultValue)
