@@ -38,6 +38,10 @@ namespace restlessmedia.Module
       // this is the default cache provider, most applications override with redis cache which is done via json config
       containerBuilder.RegisterType<HttpCacheProvider>().As<ICacheProvider>().SingleInstance();
       #endregion
+
+      #region Data
+      containerBuilder.RegisterGeneric(typeof(ModelDataProvider<>)).As(typeof(IModelDataProvider<>));
+      #endregion
     }
   }
 }
