@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using FakeItEasy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace restlessmedia.Module.UnitTest
@@ -12,20 +13,23 @@ namespace restlessmedia.Module.UnitTest
     public void RegisterModules_finds_modules_in_current_asembly()
     {
       ContainerBuilder containerBuilder = new ContainerBuilder();
-      TestAssert testAssert = A.Fake<TestAssert>();
+      List<IModule> found = new List<IModule>();
 
-      ModuleLoader<IModule>.Load(Assembly.GetExecutingAssembly(), module =>
-      {
-        module.IsA<TestModule>();
-        testAssert.Call();
-      });
+      // call
+      ModuleLoader<IModule>.Load(Assembly.GetExecutingAssembly(), found.Add);
       
-      A.CallTo(() => testAssert.Call()).MustHaveHappenedOnceExactly();
+      // assert
+      found.Count.MustBe(2);
     }
 
     public class TestModule : IModule
     {
-      public void RegisterComponents(ContainerBuilder containerBuilder) { }
+      public virtual void RegisterComponents(ContainerBuilder containerBuilder) { }
+    }
+
+    public class TestInheritnceModule : TestModule
+    {
+      public override void RegisterComponents(ContainerBuilder containerBuilder) { }
     }
 
     public abstract class TestAssert
