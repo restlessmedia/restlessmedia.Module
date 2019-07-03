@@ -41,6 +41,7 @@ namespace restlessmedia.Module
 
       #region Data
       containerBuilder.RegisterGeneric(typeof(ModelDataProvider<>)).As(typeof(IModelDataProvider<>));
+      containerBuilder.RegisterType<EntityDataProvider>().As<IEntityDataProvider>().SingleInstance();
       #endregion
     }
   }
