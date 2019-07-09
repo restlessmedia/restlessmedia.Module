@@ -15,7 +15,12 @@ namespace restlessmedia.Module
 
     public IDbConnection CreateConnection(bool open = false)
     {
-      return new SqlConnection(_databaseSettings.ConnectionString.ConnectionString);
+      IDbConnection connection = new SqlConnection(_databaseSettings.ConnectionString.ConnectionString);
+      if (open)
+      {
+        connection.Open();
+      }
+      return connection;
     }
 
     public IDbTransaction CreateTransaction(IDbConnection connection)
