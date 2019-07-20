@@ -1,13 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using restlessmedia.Test;
 using System;
 using System.Linq;
+using Xunit;
 
 namespace restlessmedia.Module.UnitTest.Extensions
 {
-  [TestClass]
   public class ExceptionExtensionsTests
   {
-    [TestMethod]
+    [Fact]
     public void AllMessages_returns_messages()
     {
       Exception innerException = new Exception("inner");
@@ -18,7 +18,7 @@ namespace restlessmedia.Module.UnitTest.Extensions
       exception.AllMessages().Skip(1).First().MustBe("inner");
     }
 
-    [TestMethod]
+    [Fact]
     public void Messages_returns_messages_with_separator()
     {
       Exception innerException = new Exception("inner");

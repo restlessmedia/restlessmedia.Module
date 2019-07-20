@@ -1,20 +1,20 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using restlessmedia.Test;
+using Xunit;
 
 namespace restlessmedia.Module.UnitTest
 {
-  [TestClass]
   public class PagingTests
   {
-    [TestMethod]
+    [Fact]
     public void TestPagingHasRecordCountUsedWithConstructor()
     {
       int totalCount = 10;
       Paging paging = new Paging(totalCount);
 
-      Assert.AreEqual(paging.TotalCount, totalCount);
+      paging.TotalCount.MustBe(totalCount);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestPagingHasValidPageCount()
     {
       int totalCount = 8;
@@ -23,10 +23,10 @@ namespace restlessmedia.Module.UnitTest
 
       paging.MaxPerPage = maxPerPage;
 
-      Assert.AreEqual(paging.Pages, 2);
+      paging.Pages.MustBe(2);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestPagingHasValidPageCountWhenUsingOddMaxPagesAndRecordCount()
     {
       int totalCount = 11;
@@ -35,10 +35,10 @@ namespace restlessmedia.Module.UnitTest
 
       paging.MaxPerPage = maxPerPage;
 
-      Assert.AreEqual(paging.Pages, 4);
+      paging.Pages.MustBe(4);
     }
 
-    [TestMethod]
+    [Fact]
     public void TestPagingIsOnLastPage()
     {
       int totalCount = 10;
@@ -48,10 +48,10 @@ namespace restlessmedia.Module.UnitTest
       paging.MaxPerPage = maxPerPage;
       paging.Page = 2;
 
-      Assert.IsTrue(paging.IsLastPage);
+      paging.IsLastPage.MustBeTrue();
     }
 
-    [TestMethod]
+    [Fact]
     public void TestPagingIsOnFirstPage()
     {
       int totalCount = 10;
@@ -61,14 +61,14 @@ namespace restlessmedia.Module.UnitTest
       paging.MaxPerPage = maxPerPage;
       paging.Page = 1;
 
-      Assert.IsTrue(paging.IsFirstPage);
+      paging.IsFirstPage.MustBeTrue();
     }
 
-    [TestMethod]
+    [Fact]
     public void TestPagingIsOnFirstPageByDefault()
     {
       Paging paging = new Paging();
-      Assert.IsTrue(paging.IsFirstPage);
+      paging.IsFirstPage.MustBeTrue();
     }
   }
 }

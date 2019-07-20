@@ -1,15 +1,14 @@
 ﻿using Autofac;
-using FakeItEasy;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using restlessmedia.Test;
 using System.Collections.Generic;
 using System.Reflection;
+using Xunit;
 
 namespace restlessmedia.Module.UnitTest
 {
-  [TestClass]
   public class ModuleLoaderTests
   {
-    [TestMethod]
+    [Fact]
     public void RegisterModules_finds_modules_in_current_asembly()
     {
       ContainerBuilder containerBuilder = new ContainerBuilder();

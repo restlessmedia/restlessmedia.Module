@@ -1,11 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using restlessmedia.Test;
+using Xunit;
 
 namespace restlessmedia.Module.UnitTest
 {
-  [TestClass]
   public class EnumerableHelperTests
   {
-    [TestMethod]
+    [Fact]
     public void Range_returns_number_range()
     {
       EnumerableHelper.Range(1, 10, 1).MustContain(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);

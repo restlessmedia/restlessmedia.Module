@@ -1,15 +1,14 @@
 ﻿using FakeItEasy;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using restlessmedia.Module.Configuration;
 using SqlBuilder;
 using System.Data;
+using Xunit;
 
 namespace restlessmedia.Module.UnitTest.Extensions
 {
-  [TestClass]
   public class SelectExtensionsTests
   {
-    [TestMethod]
+    [Fact]
     public void WithLicenseId_adds_LiceseId_to_where_clause()
     {
       Select select = new Select();
