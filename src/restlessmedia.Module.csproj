@@ -122,6 +122,7 @@
     <Compile Include="Data\IEntityDataProvider.cs" />
     <Compile Include="Data\LicenseHelper.cs" />
     <Compile Include="Data\Sql\SqlDataProviderBase.cs" />
+    <Compile Include="Duration.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityService.cs" />
     <Compile Include="EntityType.cs" />
