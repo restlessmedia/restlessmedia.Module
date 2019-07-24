@@ -125,6 +125,7 @@
     <Compile Include="Entity.cs" />
     <Compile Include="EntityService.cs" />
     <Compile Include="EntityType.cs" />
+    <Compile Include="EnumComparer.cs" />
     <Compile Include="EnumerableHelper.cs" />
     <Compile Include="Extensions\AutofacExtensions.cs" />
     <Compile Include="Extensions\EnumerationExtensions.cs" />

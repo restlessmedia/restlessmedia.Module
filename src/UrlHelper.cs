@@ -1,10 +1,12 @@
 ﻿using FastMember;
+using System;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace restlessmedia.Module
 {
+  [Obsolete("Moved to restlessmedia.Module.Web")]
   public class UrlHelper
   {
     /// <summary>
