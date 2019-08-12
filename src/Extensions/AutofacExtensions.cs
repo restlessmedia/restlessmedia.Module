@@ -15,7 +15,7 @@ namespace Autofac
       }
 
       ConfigurationBuilder configBuilder = new ConfigurationBuilder();
-      builder.AddJsonFile(jsonFile);
+      JsonConfigurationExtensions.AddJsonFile(configBuilder, jsonFile);
       ConfigurationModule module = new ConfigurationModule(configBuilder.Build());
       builder.RegisterModule(module);
     }

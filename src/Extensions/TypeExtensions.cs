@@ -184,6 +184,17 @@ namespace restlessmedia.Module.Extensions
       return underlyingType != null;
     }
 
+    /// <summary>
+    /// Returns members for T which pass the predicate using the attribute if found (or null).
+    /// </summary>
+    /// <typeparam name="TAttribute"></typeparam>
+    /// <returns></returns>
+    public static IEnumerable<MemberInfo> GetMembers<TAttribute>(this Type type, Func<TAttribute, bool> predicate)
+      where TAttribute : Attribute
+    {
+      return type.GetMembers().Where(x => predicate(x.GetCustomAttribute<TAttribute>()));
+    }
+
     private static bool HasInterfaceThatMapsToGenericTypeDefinition(this Type givenType, Type genericType)
     {
       return givenType.GetInterfaces().Where(it => it.IsGenericType).Any(it => it.GetGenericTypeDefinition() == genericType);
