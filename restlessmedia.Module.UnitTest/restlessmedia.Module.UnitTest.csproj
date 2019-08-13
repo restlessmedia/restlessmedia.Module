@@ -69,9 +69,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\AutofacExtensionsTests.cs" />
     <Compile Include="Extensions\ExceptionExtensionsTests.cs" />
     <Compile Include="Extensions\SelectExtensionsTests.cs" />
     <Compile Include="Extensions\EnumerationExtensionsTests.cs" />
+    <Compile Include="Extensions\StringExtensionTests.cs" />
     <Compile Include="ModuleLoaderTests.cs" />
     <Compile Include="PagingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

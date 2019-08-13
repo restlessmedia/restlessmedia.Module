@@ -12,7 +12,7 @@
     <tags></tags>
     <frameworkAssemblies>
       <!-- required for stackexchange.redis -->
-      <frameworkAssembly assemblyName="System.IO.Compression"  />
+      <frameworkAssembly assemblyName="System.IO.Compression" />
     </frameworkAssemblies>
   </metadata>
 </package>

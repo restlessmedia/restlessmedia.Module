@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -316,6 +317,15 @@ namespace restlessmedia.Module.Extensions
       }
 
       return string.Concat(Char.ToLowerInvariant(value[0]), value.Substring(1));
+    }
+
+    public static string ReplaceAll(this string value, IEnumerable<string> values, string replaceWith)
+    {
+      if (string.IsNullOrWhiteSpace(value))
+      {
+        return value;
+      }
+      return Regex.Replace(value, string.Join("|", values), replaceWith);
     }
   }
 }

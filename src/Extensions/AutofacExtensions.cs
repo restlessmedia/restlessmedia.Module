@@ -7,6 +7,11 @@ namespace Autofac
 {
   public static class AutofacExtensions
   {
+    /// <summary>
+    /// Adds a json config file to the registration.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="jsonFile"></param>
     public static void AddJsonFile(this ContainerBuilder builder, string jsonFile)
     {
       if (string.IsNullOrEmpty(jsonFile))
