@@ -74,6 +74,7 @@
     <Compile Include="Extensions\SelectExtensionsTests.cs" />
     <Compile Include="Extensions\EnumerationExtensionsTests.cs" />
     <Compile Include="Extensions\StringExtensionTests.cs" />
+    <Compile Include="Extensions\TypeExtensionsTests.cs" />
     <Compile Include="ModuleLoaderTests.cs" />
     <Compile Include="PagingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
