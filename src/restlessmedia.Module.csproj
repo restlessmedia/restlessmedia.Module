@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+<LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -163,6 +164,7 @@
     <Compile Include="IEntityService.cs" />
     <Compile Include="IgnoreAttribute.cs" />
     <Compile Include="Extensions\IModuleExtensions.cs" />
+    <Compile Include="ILog.cs" />
     <Compile Include="IPubSubProvider.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="LicensedEntity.cs" />
