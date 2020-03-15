@@ -69,6 +69,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Caching\RedisCacheProviderTests.cs" />
     <Compile Include="Extensions\AutofacExtensionsTests.cs" />
     <Compile Include="Extensions\ExceptionExtensionsTests.cs" />
     <Compile Include="Extensions\SelectExtensionsTests.cs" />

@@ -11,16 +11,16 @@ namespace restlessmedia.Module.Caching
 
     public override void Add<T>(string key, T value, TimeSpan? expiry = null)
     {
-      GetDatabase().StringSet(key, Serialize(value), expiry);
+      WithDatabase(database => database.StringSet(key, Serialize(value), expiry));
     }
 
     public override T Get<T>(string key)
     {
-      byte[] result = GetDatabase().StringGet(key);
+      byte[] result = WithDatabase(database => database.StringGet(key));
 
       if (result == null)
       {
-        return default(T);
+        return default;
       }
 
       return Deserialize<T>(result);
@@ -28,17 +28,19 @@ namespace restlessmedia.Module.Caching
 
     public void Remove(string key)
     {
-      GetDatabase().KeyDelete(key);
+      WithDatabase(database => database.KeyDelete(key));
     }
 
     public bool Exists(string key)
     {
-      return GetDatabase().KeyExists(key);
+      return WithDatabase(database => database.KeyExists(key));
     }
 
-    protected ConnectionMultiplexer Connection
+    protected virtual bool TryGetDatabase(out IDatabase database)
     {
-      get
+      database = null;
+
+      try
       {
         if (_connection == null)
         {
@@ -51,18 +53,26 @@ namespace restlessmedia.Module.Caching
           }
         }
 
-        return _connection;
+        database = _connection.GetDatabase();
       }
+      catch
+      {
+        // TODO: log
+        _connection = null;
+        database = null;
+      }
+
+      return database != null;
     }
 
-    private void Add(string key, byte[] value, TimeSpan? expiry = null)
+    private T WithDatabase<T>(Func<IDatabase, T> invoker)
     {
-      GetDatabase().StringSet(key, value, expiry);
-    }
+      if (TryGetDatabase(out IDatabase database))
+      {
+        return invoker(database);
+      }
 
-    private IDatabase GetDatabase()
-    {
-      return Connection.GetDatabase();
+      return default;
     }
 
     private static ConfigurationOptions GetOptions(ICacheSettings cacheSettings)
@@ -71,6 +81,8 @@ namespace restlessmedia.Module.Caching
       {
         Ssl = cacheSettings.Ssl,
         ConnectRetry = cacheSettings.Retry,
+        ConnectTimeout = cacheSettings.Timeout,
+        AbortOnConnectFail = false,
       };
 
       if (!string.IsNullOrEmpty(cacheSettings.AccessKey))
