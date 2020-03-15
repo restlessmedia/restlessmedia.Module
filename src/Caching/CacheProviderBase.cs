@@ -22,7 +22,7 @@ namespace restlessmedia.Module.Caching
     public T Get<T>(string key, Func<T> valueProvider)
       where T : class
     {
-      T result = default(T);
+      T result = default;
 
       try
       {
@@ -33,11 +33,11 @@ namespace restlessmedia.Module.Caching
         if (e is ArgumentException || e is SerializationException)
         {
           // catch the situations where the cached value can't be deserialised
-          result = default(T);
+          result = default;
         }
       }
 
-      if (!EqualityComparer<T>.Default.Equals(result, default(T)))
+      if (!EqualityComparer<T>.Default.Equals(result, default))
       {
         return result;
       }
