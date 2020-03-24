@@ -33,7 +33,7 @@ namespace restlessmedia.Module.Configuration
       }
     }
 
-    [ConfigurationProperty(_timeoutProperty, IsRequired = false, DefaultValue = 30)]
+    [ConfigurationProperty(_timeoutProperty, IsRequired = false, DefaultValue = 5000)]
     public int Timeout
     {
       get
