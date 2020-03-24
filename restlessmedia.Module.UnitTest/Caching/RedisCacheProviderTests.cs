@@ -1,6 +1,7 @@
 ﻿using FakeItEasy;
 using restlessmedia.Module.Caching;
 using restlessmedia.Module.Configuration;
+using restlessmedia.Test;
 using System;
 using Xunit;
 
@@ -13,13 +14,18 @@ namespace restlessmedia.Module.UnitTest.Caching
     {
       RedisCacheProvider redisCacheProvider = CreateInstance();
 
-      redisCacheProvider.Add("foo", DateTime.Now);
+      // this should fail - there is no connection set-up
+      Action action = () => redisCacheProvider.Add("foo", DateTime.Now);
+
+      // assert that it fails silently
+      action.MustNotThrow();
     }
 
     private RedisCacheProvider CreateInstance()
     {
       ICacheSettings cacheSettings = A.Fake<ICacheSettings>();
-      RedisCacheProvider cacheProvider = new RedisCacheProvider(cacheSettings);
+      ILog log = A.Fake<ILog>();
+      RedisCacheProvider cacheProvider = new RedisCacheProvider(cacheSettings, log);
       return cacheProvider;
     }
   }
