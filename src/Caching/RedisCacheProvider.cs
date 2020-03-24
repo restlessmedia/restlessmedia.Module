@@ -6,8 +6,11 @@ namespace restlessmedia.Module.Caching
 {
   public class RedisCacheProvider : CacheProviderBase, ICacheProvider
   {
-    public RedisCacheProvider(ICacheSettings cacheSettings)
-      : base(cacheSettings) { }
+    public RedisCacheProvider(ICacheSettings cacheSettings, ILog log)
+      : base(cacheSettings)
+    {
+      _log = log ?? throw new ArgumentNullException(nameof(log));
+    }
 
     public override void Add<T>(string key, T value, TimeSpan? expiry = null)
     {
@@ -55,11 +58,11 @@ namespace restlessmedia.Module.Caching
 
         database = _connection.GetDatabase();
       }
-      catch
+      catch (Exception e)
       {
-        // TODO: log
         _connection = null;
         database = null;
+        _log.Exception(e);
       }
 
       return database != null;
@@ -101,5 +104,7 @@ namespace restlessmedia.Module.Caching
     private static readonly object _connectionLock = new object();
 
     private static ConnectionMultiplexer _connection;
+
+    private readonly ILog _log;
   }
 }
