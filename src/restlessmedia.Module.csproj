@@ -12,7 +12,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
-<LangVersion>latest</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -156,6 +156,7 @@
     <Compile Include="Extensions\EnumerationExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\ILogExtensions.cs" />
     <Compile Include="Extensions\SelectExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="Data\Sql\UDTHelper.cs" />
     <Compile Include="Data\Sql\UDTInt.cs" />
     <Compile Include="ResourceHelper.cs" />
+    <Compile Include="TraceLog.cs" />
     <Compile Include="UrlHelper.cs" />
     <Compile Include="ValidationHelper.cs" />
   </ItemGroup>
