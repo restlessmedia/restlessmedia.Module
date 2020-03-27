@@ -14,7 +14,7 @@ namespace restlessmedia.Module
       ModuleLoader<IModule>.Load(x => x.RegisterComponents(containerBuilder));
     }
 
-    private static void RegisterComponents(ContainerBuilder containerBuilder)
+    internal static void RegisterComponents(ContainerBuilder containerBuilder)
     {
       #region settings
       containerBuilder.RegisterSettings<ILicenseSettings>("restlessmedia/license", required: true);
