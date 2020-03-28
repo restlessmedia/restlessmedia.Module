@@ -29,7 +29,7 @@ namespace restlessmedia.Module
 
       // don't register the default connection factory if it's already been found and registered
       // this gives other modules the opportunity to register their own to add pre execute calls per connection (set context for example)
-      containerBuilder.RegisterIf<ConnectionFactory, IConnectionFactory>(registry => !registry.IsRegistered<IConnectionFactory>())
+      containerBuilder.RegisterIf<ModuleConnectionFactory, IConnectionFactory>(registry => !registry.IsRegistered<IConnectionFactory>())
         .SingleInstance();
 
       containerBuilder.RegisterType<SqlRetry>().As<IRetry>().SingleInstance();
