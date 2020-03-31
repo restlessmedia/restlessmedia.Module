@@ -70,12 +70,20 @@ namespace restlessmedia.Module.Caching
 
     private T WithDatabase<T>(Func<IDatabase, T> invoker)
     {
-      if (TryGetDatabase(out IDatabase database))
+      if (!TryGetDatabase(out IDatabase database))
+      {
+        return default;
+      }
+
+      try
       {
         return invoker(database);
       }
-
-      return default;
+      catch(Exception e)
+      {
+        _log.Exception(e);
+        return default;
+      }
     }
 
     private static ConfigurationOptions GetOptions(ICacheSettings cacheSettings)

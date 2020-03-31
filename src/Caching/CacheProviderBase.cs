@@ -19,7 +19,21 @@ namespace restlessmedia.Module.Caching
 
     public abstract void Add<T>(string key, T value, TimeSpan? expiry = null);
 
-    public T Get<T>(string key, Func<T> valueProvider)
+    public bool TryAdd<T>(string key, T value, TimeSpan? expiry = null)
+    {
+      try
+      {
+        Add(key, value, expiry);
+        return true;
+      }
+      catch
+      {
+        // TODO: Log
+        return false;
+      }
+    }
+
+    public T Get<T>(string key, Func<T> valueProvider, TimeSpan? expiry = null)
       where T : class
     {
       T result = default;
@@ -37,6 +51,7 @@ namespace restlessmedia.Module.Caching
         }
       }
 
+      // if it's not null (default), return it
       if (!EqualityComparer<T>.Default.Equals(result, default))
       {
         return result;
@@ -46,7 +61,8 @@ namespace restlessmedia.Module.Caching
 
       if (!ReferenceEquals(result, null))
       {
-        Add(key, result);
+        // if it's not null, try to add it
+        TryAdd(key, result, expiry);
       }
 
       return result;

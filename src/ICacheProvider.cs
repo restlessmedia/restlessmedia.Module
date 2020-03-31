@@ -6,10 +6,12 @@ namespace restlessmedia.Module
   {
     void Add<T>(string key, T value, TimeSpan? expiry = null);
 
+    bool TryAdd<T>(string key, T value, TimeSpan? expiry = null);
+
     T Get<T>(string key)
       where T : class;
 
-    T Get<T>(string key, Func<T> valueProvider)
+    T Get<T>(string key, Func<T> valueProvider, TimeSpan? expiry = null)
       where T : class;
 
     void Remove(string key);
