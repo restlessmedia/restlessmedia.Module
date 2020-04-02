@@ -14,6 +14,9 @@ namespace restlessmedia.Module
     T Get<T>(string key, Func<T> valueProvider, TimeSpan? expiry = null)
       where T : class;
 
+    bool TryGet<T>(string key, Func<T> valueProvider, out T value, TimeSpan? expiry = null)
+      where T : class;
+
     void Remove(string key);
 
     bool Exists(string key);

@@ -6,8 +6,8 @@ namespace restlessmedia.Module.Caching
 {
   public class HttpCacheProvider : CacheProviderBase, ICacheProvider
   {
-    public HttpCacheProvider(ICacheSettings cacheSettings)
-      : base(cacheSettings) { }
+    public HttpCacheProvider(ICacheSettings cacheSettings, ILog log)
+      : base(cacheSettings, log) { }
 
     public override void Add<T>(string key, T value, TimeSpan? expiry = null)
     {

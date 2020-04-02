@@ -9,9 +9,10 @@ namespace restlessmedia.Module.Caching
 {
   public abstract class CacheProviderBase
   {
-    public CacheProviderBase(ICacheSettings cacheSettings)
+    public CacheProviderBase(ICacheSettings cacheSettings, ILog log)
     {
       CacheSettings = cacheSettings;
+      Log = log ?? throw new ArgumentNullException(nameof(log));
     }
 
     public abstract T Get<T>(string key)
@@ -19,21 +20,37 @@ namespace restlessmedia.Module.Caching
 
     public abstract void Add<T>(string key, T value, TimeSpan? expiry = null);
 
-    public bool TryAdd<T>(string key, T value, TimeSpan? expiry = null)
+    public virtual bool TryAdd<T>(string key, T value, TimeSpan? expiry = null)
     {
       try
       {
         Add(key, value, expiry);
         return true;
       }
-      catch
+      catch(Exception e)
       {
-        // TODO: Log
+        Log.Exception(e);
         return false;
       }
     }
 
-    public T Get<T>(string key, Func<T> valueProvider, TimeSpan? expiry = null)
+    public virtual bool TryGet<T>(string key, Func<T> valueProvider, out T value, TimeSpan? expiry = null)
+      where T : class
+    {
+      try
+      {
+        value = Get<T>(key, valueProvider, expiry);
+        return true;
+      }
+      catch (Exception e)
+      {
+        value = default(T);
+        Log.Exception(e);
+        return false;
+      }
+    }
+
+    public virtual T Get<T>(string key, Func<T> valueProvider, TimeSpan? expiry = null)
       where T : class
     {
       T result = default;
@@ -68,7 +85,7 @@ namespace restlessmedia.Module.Caching
       return result;
     }
 
-    public string GetKey(params object[] keys)
+    public virtual string GetKey(params object[] keys)
     {
       const string separator = ":";
       return string.Join(separator, keys);
@@ -93,5 +110,7 @@ namespace restlessmedia.Module.Caching
     }
 
     protected readonly ICacheSettings CacheSettings;
+
+    protected readonly ILog Log;
   }
 }

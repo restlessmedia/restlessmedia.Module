@@ -7,10 +7,7 @@ namespace restlessmedia.Module.Caching
   public class RedisCacheProvider : CacheProviderBase, ICacheProvider
   {
     public RedisCacheProvider(ICacheSettings cacheSettings, ILog log)
-      : base(cacheSettings)
-    {
-      _log = log ?? throw new ArgumentNullException(nameof(log));
-    }
+      : base(cacheSettings, log) { }
 
     public override void Add<T>(string key, T value, TimeSpan? expiry = null)
     {
@@ -62,7 +59,7 @@ namespace restlessmedia.Module.Caching
       {
         _connection = null;
         database = null;
-        _log.Exception(e);
+        Log.Exception(e);
       }
 
       return database != null;
@@ -75,15 +72,7 @@ namespace restlessmedia.Module.Caching
         return default;
       }
 
-      try
-      {
-        return invoker(database);
-      }
-      catch(Exception e)
-      {
-        _log.Exception(e);
-        return default;
-      }
+      return invoker(database);
     }
 
     private static ConfigurationOptions GetOptions(ICacheSettings cacheSettings)
@@ -112,7 +101,5 @@ namespace restlessmedia.Module.Caching
     private static readonly object _connectionLock = new object();
 
     private static ConnectionMultiplexer _connection;
-
-    private readonly ILog _log;
   }
 }
