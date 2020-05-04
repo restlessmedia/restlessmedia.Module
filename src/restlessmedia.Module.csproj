@@ -190,6 +190,7 @@
     <Compile Include="Data\Sql\UDTBase.cs" />
     <Compile Include="Data\Sql\UDTHelper.cs" />
     <Compile Include="Data\Sql\UDTInt.cs" />
+    <Compile Include="Query.cs" />
     <Compile Include="ResourceHelper.cs" />
     <Compile Include="ModuleConnectionFactory.cs" />
     <Compile Include="TraceLog.cs" />
