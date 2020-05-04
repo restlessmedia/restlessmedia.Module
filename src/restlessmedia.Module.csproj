@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\BindAsAttribute.cs" />
+    <Compile Include="Branch.cs" />
     <Compile Include="Caching\CacheProviderBase.cs" />
     <Compile Include="Caching\HttpCacheProvider.cs" />
     <Compile Include="Caching\RedisCacheProvider.cs" />
@@ -159,6 +160,7 @@
     <Compile Include="Extensions\SelectExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="IBranch.cs" />
     <Compile Include="ICacheProvider.cs" />
     <Compile Include="IEntity.cs" />
     <Compile Include="IEntityService.cs" />
@@ -169,9 +171,11 @@
     <Compile Include="IService.cs" />
     <Compile Include="LicensedEntity.cs" />
     <Compile Include="LicenseException.cs" />
+    <Compile Include="Marker.cs" />
     <Compile Include="ModuleBuilder.cs" />
     <Compile Include="ModuleLoader.cs" />
     <Compile Include="MoveDirection.cs" />
+    <Compile Include="Office.cs" />
     <Compile Include="PubSubProvider.cs" />
     <Compile Include="Configuration\IDatabaseSettings.cs" />
     <Compile Include="Configuration\IFeature.cs" />
@@ -193,6 +197,7 @@
     <Compile Include="Query.cs" />
     <Compile Include="ResourceHelper.cs" />
     <Compile Include="ModuleConnectionFactory.cs" />
+    <Compile Include="Site.cs" />
     <Compile Include="TraceLog.cs" />
     <Compile Include="UrlHelper.cs" />
     <Compile Include="ValidationHelper.cs" />
