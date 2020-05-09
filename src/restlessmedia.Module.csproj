@@ -147,6 +147,7 @@
     <Compile Include="Data\LicenseHelper.cs" />
     <Compile Include="Data\SqlHelper.cs" />
     <Compile Include="Data\SqlLikeMatch.cs" />
+    <Compile Include="Data\Sql\QueryExtensions.cs" />
     <Compile Include="Data\Sql\SqlDataProviderBase.cs" />
     <Compile Include="Duration.cs" />
     <Compile Include="Entity.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Extensions\AutofacExtensions.cs" />
     <Compile Include="Extensions\EnumerationExtensions.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
+    <Compile Include="Extensions\ExpressionExtensions.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\ILogExtensions.cs" />
     <Compile Include="Extensions\SelectExtensions.cs" />
