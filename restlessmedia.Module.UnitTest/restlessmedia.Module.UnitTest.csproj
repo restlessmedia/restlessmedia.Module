@@ -86,6 +86,7 @@
     <Compile Include="Extensions\AutofacExtensionsTests.cs" />
     <Compile Include="Extensions\ExceptionExtensionsTests.cs" />
     <Compile Include="Extensions\ExpressionExtensionsTests.cs" />
+    <Compile Include="Extensions\LinqExtensionsTests.cs" />
     <Compile Include="Extensions\SelectExtensionsTests.cs" />
     <Compile Include="Extensions\EnumerationExtensionsTests.cs" />
     <Compile Include="Extensions\StringExtensionTests.cs" />
