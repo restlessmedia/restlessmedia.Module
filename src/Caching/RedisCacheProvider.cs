@@ -1,10 +1,11 @@
 ﻿using restlessmedia.Module.Configuration;
 using StackExchange.Redis;
 using System;
+using System.Linq;
 
 namespace restlessmedia.Module.Caching
 {
-  public class RedisCacheProvider : CacheProviderBase, ICacheProvider
+  public class RedisCacheProvider : CacheProviderBase, ICacheProvider, IDisposable
   {
     public RedisCacheProvider(ICacheSettings cacheSettings, ILog log)
       : base(cacheSettings, log) { }
@@ -26,9 +27,25 @@ namespace restlessmedia.Module.Caching
       return Deserialize<T>(result);
     }
 
+    /// <summary>
+    /// Removes an entry by key. If a wilcard is used, the remove will be performed across all available endpoint databases.
+    /// </summary>
+    /// <param name="key"></param>
     public void Remove(string key)
     {
-      WithDatabase(database => database.KeyDelete(key));
+      if (string.IsNullOrEmpty(key))
+      {
+        throw new ArgumentNullException(nameof(key));
+      }
+
+      if (key.EndsWith("*"))
+      {
+        RemoveFromAllServers(key);
+      }
+      else
+      {
+        WithDatabase(database => database.KeyDelete(key));
+      }
     }
 
     public bool Exists(string key)
@@ -36,33 +53,47 @@ namespace restlessmedia.Module.Caching
       return WithDatabase(database => database.KeyExists(key));
     }
 
+    public void Dispose()
+    {
+      if (_connection != null)
+      {
+        _connection.Dispose();
+        _connection = null;
+      }
+    }
+
     protected virtual bool TryGetDatabase(out IDatabase database)
     {
-      database = null;
-
       try
       {
-        if (_connection == null)
-        {
-          lock (_connectionLock)
-          {
-            if (_connection == null)
-            {
-              _connection = ConnectionMultiplexer.Connect(GetOptions(CacheSettings));
-            }
-          }
-        }
-
-        database = _connection.GetDatabase();
+        database = GetConnection().GetDatabase();
       }
       catch (Exception e)
       {
+        // if we fail to connect, null out database and null out connection
+        // there are cases where there is a connection but the database is failing
         _connection = null;
         database = null;
         Log.Exception(e);
       }
 
       return database != null;
+    }
+
+    private ConnectionMultiplexer GetConnection()
+    {
+      if (_connection == null)
+      {
+        lock (_connectionLock)
+        {
+          if (_connection == null)
+          {
+            _connection = ConnectionMultiplexer.Connect(GetOptions(CacheSettings));
+          }
+        }
+      }
+
+      return _connection;
     }
 
     private T WithDatabase<T>(Func<IDatabase, T> invoker)
@@ -73,6 +104,25 @@ namespace restlessmedia.Module.Caching
       }
 
       return invoker(database);
+    }
+
+    private void RemoveFromAllServers(string pattern)
+    {
+      try
+      {
+        ConnectionMultiplexer connection = GetConnection();
+
+        foreach (System.Net.EndPoint endPoint in connection.GetEndPoints())
+        {
+          IServer server = connection.GetServer(endPoint);
+          RedisKey[] keys = server.Keys(pattern: pattern).ToArray();
+          server.Multiplexer.GetDatabase().KeyDeleteAsync(keys);
+        }
+      }
+      catch (Exception e)
+      {
+        Log.Exception(e);
+      }
     }
 
     private static ConfigurationOptions GetOptions(ICacheSettings cacheSettings)
