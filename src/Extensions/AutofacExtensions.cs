@@ -1,5 +1,6 @@
 ﻿using Autofac.Configuration;
 using Autofac.Core;
+using Autofac.Core.Registration;
 using Microsoft.Extensions.Configuration;
 using System;
 
@@ -32,6 +33,17 @@ namespace Autofac
     /// <param name="componentRegistry"></param>
     /// <returns></returns>
     public static bool IsRegistered<T>(this IComponentRegistry componentRegistry)
+    {
+      return componentRegistry.IsRegistered(new TypedService(typeof(T)));
+    }
+
+    /// <summary>
+    /// Determines whether the specified service is registered.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="componentRegistry"></param>
+    /// <returns></returns>
+    public static bool IsRegistered<T>(this IComponentRegistryBuilder componentRegistry)
     {
       return componentRegistry.IsRegistered(new TypedService(typeof(T)));
     }

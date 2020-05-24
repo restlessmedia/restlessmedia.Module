@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Autofac.Builder;
 using Autofac.Core;
+using Autofac.Core.Registration;
 using System;
 using System.Configuration;
 
@@ -8,7 +9,7 @@ namespace restlessmedia.Module
 {
   public static class IModuleExtensions
   {
-    public static IRegistrationBuilder<T, ConcreteReflectionActivatorData, SingleRegistrationStyle> RegisterIf<T, TResolvesAs>(this ContainerBuilder containerBuilder, Func<IComponentRegistry, bool> predicate)
+    public static IRegistrationBuilder<T, ConcreteReflectionActivatorData, SingleRegistrationStyle> RegisterIf<T, TResolvesAs>(this ContainerBuilder containerBuilder, Func<IComponentRegistryBuilder, bool> predicate)
       where T : TResolvesAs
     {
       IRegistrationBuilder<T, ConcreteReflectionActivatorData, SingleRegistrationStyle> registrationBuilder = RegistrationBuilder.ForType<T>();
@@ -32,7 +33,7 @@ namespace restlessmedia.Module
     /// <param name="predicate"></param>
     /// <param name="whenTrue"></param>
     /// <param name="whenFalse"></param>
-    public static IRegistrationBuilder<T, SimpleActivatorData, SingleRegistrationStyle> RegisterWhen<T>(this ContainerBuilder containerBuilder, Func<IComponentRegistry, bool> predicate, Func<IComponentContext, T> whenTrue, Func<IComponentContext, T> whenFalse)
+    public static IRegistrationBuilder<T, SimpleActivatorData, SingleRegistrationStyle> RegisterWhen<T>(this ContainerBuilder containerBuilder, Func<IComponentRegistryBuilder, bool> predicate, Func<IComponentContext, T> whenTrue, Func<IComponentContext, T> whenFalse)
     {
       IRegistrationBuilder<T, SimpleActivatorData, SingleRegistrationStyle> registrationBuilder = containerBuilder.Register(whenTrue)
         .OnlyIf(x => predicate(x))
