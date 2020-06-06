@@ -6,7 +6,7 @@
     <Product>restlessmedia.Module</Product>
     <Description>Base module library.</Description>
     <Copyright>Copyright restlessmedia 2019</Copyright>
-    <Version>5.0.1</Version>
+    <Version>5.0.2</Version>
     <AssemblyVersion>4.2.0</AssemblyVersion>
     <FileVersion>4.2.0</FileVersion>
     <OutputPath>bin\$(Configuration)\</OutputPath>
