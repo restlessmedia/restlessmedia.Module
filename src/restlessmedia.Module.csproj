@@ -6,12 +6,13 @@
     <Product>restlessmedia.Module</Product>
     <Description>Base module library.</Description>
     <Copyright>Copyright restlessmedia 2019</Copyright>
-    <Version>5.0.3</Version>
+    <Version>5.0.4</Version>
     <AssemblyVersion>4.2.0</AssemblyVersion>
     <FileVersion>4.2.0</FileVersion>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <Authors>Phil Cooper</Authors>
     <PackageId>restlessmedia.Module</PackageId>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -76,9 +77,6 @@
     <PackageReference Include="System.Xml.XDocument" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MiscUtil">
-      <HintPath>..\Lib\MiscUtil.dll</HintPath>
-    </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />

@@ -1,5 +1,4 @@
-﻿using MiscUtil.Linq.Extensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -19,7 +18,7 @@ namespace restlessmedia.Module.Extensions
     /// <returns></returns>
     public static TReturn New<TFirst, TSecond, TReturn>(this Type type, TFirst first, TSecond second)
     {
-      return TypeExt.Ctor<TFirst, TSecond, TReturn>(type)(first, second);
+      return (TReturn)type.GetConstructor(new Type[] { typeof(TFirst), typeof(TSecond) }).Invoke(new object[] { first, second });
     }
 
     /// <summary>
@@ -32,7 +31,7 @@ namespace restlessmedia.Module.Extensions
     /// <returns></returns>
     public static TReturn New<TFirst, TReturn>(this Type type, TFirst first)
     {
-      return TypeExt.Ctor<TFirst, TReturn>(type)(first);
+      return (TReturn)type.GetConstructor(new Type[] { typeof(TFirst) }).Invoke(new object[] { first });
     }
 
     public static bool IsAssignableToGenericType(this Type type, Type genericType)
@@ -169,7 +168,7 @@ namespace restlessmedia.Module.Extensions
     /// <returns></returns>
     public static bool IsNullable(this Type type)
     {
-      return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+      return IsNullable(type, out _);
     }
 
     /// <summary>
