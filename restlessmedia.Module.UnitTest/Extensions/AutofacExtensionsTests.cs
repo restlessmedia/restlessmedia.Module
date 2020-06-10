@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Autofac.Core.Registration;
 using restlessmedia.Test;
 using System;
 using System.IO;
@@ -20,5 +21,38 @@ namespace restlessmedia.Module.UnitTest.Extensions
       // was calling itself and not JsonConfigurationExtensions
       action.MustThrow<FileNotFoundException>();
     }
+
+    [Fact]
+    public void RegisterIf_true()
+    {
+      // set-up
+      ContainerBuilder containerBuilder = new ContainerBuilder();
+
+      // call
+      containerBuilder.RegisterIf<Foo, IFoo>(registry => true);
+
+      // assert
+      IContainer container = containerBuilder.Build();
+      container.Resolve<IFoo>().MustBeA<Foo>();
+    }
+
+    [Fact]
+    public void RegisterIf_false()
+    {
+      // set-up
+      ContainerBuilder containerBuilder = new ContainerBuilder();
+
+      // call
+      containerBuilder.RegisterIf<Foo, IFoo>(registry => false);
+
+      // assert
+      IContainer container = containerBuilder.Build();
+      Action action = () => container.Resolve<IFoo>();
+      action.MustThrow<ComponentNotRegisteredException>();
+    }
+
+    private class Foo : IFoo { }
+
+    private interface IFoo { }
   }
 }

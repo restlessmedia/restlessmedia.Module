@@ -9,43 +9,6 @@ namespace restlessmedia.Module
 {
   public static class IModuleExtensions
   {
-    public static IRegistrationBuilder<T, ConcreteReflectionActivatorData, SingleRegistrationStyle> RegisterIf<T, TResolvesAs>(this ContainerBuilder containerBuilder, Func<IComponentRegistryBuilder, bool> predicate)
-      where T : TResolvesAs
-    {
-      IRegistrationBuilder<T, ConcreteReflectionActivatorData, SingleRegistrationStyle> registrationBuilder = RegistrationBuilder.ForType<T>();
-
-      registrationBuilder.RegistrationData.DeferredCallback = containerBuilder.RegisterCallback(x =>
-      {
-        if (predicate(x))
-        {
-          RegistrationBuilder.RegisterSingleComponent(x, registrationBuilder);
-        }
-      });
-
-      return registrationBuilder;
-    }
-
-    /// <summary>
-    /// Provides a way to construct a different type based on the existance of another registration.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <param name="containerBuilder"></param>
-    /// <param name="predicate"></param>
-    /// <param name="whenTrue"></param>
-    /// <param name="whenFalse"></param>
-    public static IRegistrationBuilder<T, SimpleActivatorData, SingleRegistrationStyle> RegisterWhen<T>(this ContainerBuilder containerBuilder, Func<IComponentRegistryBuilder, bool> predicate, Func<IComponentContext, T> whenTrue, Func<IComponentContext, T> whenFalse)
-    {
-      IRegistrationBuilder<T, SimpleActivatorData, SingleRegistrationStyle> registrationBuilder = containerBuilder.Register(whenTrue)
-        .OnlyIf(x => predicate(x))
-        .As<T>();
-
-      registrationBuilder = containerBuilder.Register(whenFalse)
-        .OnlyIf(x => !predicate(x))
-        .As<T>();
-
-      return registrationBuilder;
-    }
-
     public static void RegisterSettings<T>(this ContainerBuilder containerBuilder, string path, T defaultValue)
     {
       object section = ConfigurationManager.GetSection(path);
