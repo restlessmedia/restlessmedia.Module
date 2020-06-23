@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Web.Compilation;
 
@@ -14,35 +15,58 @@ namespace restlessmedia.Module
   /// <typeparam name="TModule"></typeparam>
   public class ModuleLoader<TModule>
   {
-    public static void Load(Action<TModule> factory)
+    public static void Load(Action<TModule> factory, Assembly assembly = null)
     {
-      foreach (TModule module in FindModules())
+      if (assembly != null)
       {
+        RegisterTypes(assembly);
+      }
+      else
+      {
+        RegisterTypes();
+      }
+
+      foreach (Type moduleType in _modulesToLoad)
+      {
+        TModule module = CreateModule(moduleType);
         factory(module);
       }
     }
 
-    public static void Load(Assembly assembly, Action<TModule> factory)
+    public static void Register<T>()
+      where T : TModule
     {
-      foreach (TModule module in FindModules(assembly))
+      Register(typeof(T));
+    }
+
+    public static void Register(Type type)
+    {
+      lock (_modulesToLoadLock)
       {
-        factory(module);
+        if (!_modulesToLoad.Contains(type))
+        {
+          _modulesToLoad.Add(type);
+        }
+      }
+    }
+    
+    private static void RegisterTypes()
+    {
+      foreach (Assembly assembly in BuildManager.GetReferencedAssemblies().Cast<Assembly>())
+      {
+        RegisterTypes(assembly);
       }
     }
 
-    public static IEnumerable<TModule> FindModules()
-    {
-      return BuildManager.GetReferencedAssemblies().Cast<Assembly>().SelectMany(assembly => FindModules(assembly));
-    }
-
-    public static IEnumerable<TModule> FindModules(Assembly assembly)
+    private static void RegisterTypes(Assembly assembly)
     {
       Type abstractModuleType = typeof(TModule);
       Trace.TraceInformation($"{abstractModuleType.FullName} module loader scanning {assembly.FullName} for {abstractModuleType.Name} types.");
-      foreach (Type moduleType in GetAssemblyTypes(assembly).Where(x => x != null && !x.IsAbstract && x != abstractModuleType && abstractModuleType.IsAssignableFrom(x)))
+      foreach (Type moduleType in GetAssemblyTypes(assembly)
+        .Where(x => x != null && !x.IsAbstract && x != abstractModuleType && abstractModuleType.IsAssignableFrom(x)))
       {
+        Register(moduleType);
         Trace.TraceInformation($"Registering module components for {moduleType.FullName}.");
-        yield return (TModule)Activator.CreateInstance(moduleType);
       }
     }
 
@@ -65,5 +89,19 @@ namespace restlessmedia.Module
         return e.Types;
       }
     }
+
+    private static TModule CreateModule(Type type)
+    {
+      NewExpression newExp = Expression.New(type);
+      LambdaExpression lambda = Expression.Lambda(typeof(ModuleActivator), newExp, new ParameterExpression[] { });
+      ModuleActivator activator = (ModuleActivator)lambda.Compile();
+      return activator();
+    }
+
+    private delegate TModule ModuleActivator();
+
+    private static IList<Type> _modulesToLoad = new List<Type>();
+
+    private static object _modulesToLoadLock = new object();
   }
 }

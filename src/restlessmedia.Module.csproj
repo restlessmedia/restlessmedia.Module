@@ -6,9 +6,9 @@
     <Product>restlessmedia.Module</Product>
     <Description>Base module library.</Description>
     <Copyright>Copyright restlessmedia 2020</Copyright>
-    <Version>5.0.6</Version>
-    <AssemblyVersion>5.0.6</AssemblyVersion>
-    <FileVersion>5.0.6</FileVersion>
+    <Version>6.0.0</Version>
+    <AssemblyVersion>6.0.0</AssemblyVersion>
+    <FileVersion>6.0.0</FileVersion>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <Authors>Phil Cooper</Authors>
     <PackageId>restlessmedia.Module</PackageId>
@@ -20,6 +20,9 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="ObjectActivator.cs" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="5.2.0" />
     <PackageReference Include="Autofac.Configuration" Version="5.1.0" />

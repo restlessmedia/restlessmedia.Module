@@ -15,7 +15,7 @@ namespace restlessmedia.Module.UnitTest
       List<IModule> found = new List<IModule>();
 
       // call
-      ModuleLoader<IModule>.Load(Assembly.GetExecutingAssembly(), found.Add);
+      ModuleLoader<IModule>.Load(found.Add, Assembly.GetExecutingAssembly());
       
       // assert
       found.Count.MustBe(2);
