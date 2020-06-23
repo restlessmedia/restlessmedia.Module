@@ -17,13 +17,16 @@ namespace restlessmedia.Module
   {
     public static void Load(Action<TModule> factory, Assembly assembly = null)
     {
-      if (assembly != null)
+      if (AutoLoad)
       {
-        RegisterTypes(assembly);
-      }
-      else
-      {
-        RegisterTypes();
+        if (assembly != null)
+        {
+          FindAndRegisterTypes(assembly);
+        }
+        else
+        {
+          FindAndRegisterTypes();
+        }
       }
 
       foreach (Type moduleType in _modulesToLoad)
@@ -49,16 +52,18 @@ namespace restlessmedia.Module
         }
       }
     }
+
+    public static bool AutoLoad = true;
     
-    private static void RegisterTypes()
+    private static void FindAndRegisterTypes()
     {
       foreach (Assembly assembly in BuildManager.GetReferencedAssemblies().Cast<Assembly>())
       {
-        RegisterTypes(assembly);
+        FindAndRegisterTypes(assembly);
       }
     }
 
-    private static void RegisterTypes(Assembly assembly)
+    private static void FindAndRegisterTypes(Assembly assembly)
     {
       Type abstractModuleType = typeof(TModule);
       Trace.TraceInformation($"{abstractModuleType.FullName} module loader scanning {assembly.FullName} for {abstractModuleType.Name} types.");
