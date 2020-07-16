@@ -2,10 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Web.Compilation;
 
 namespace restlessmedia.Module
 {
@@ -15,64 +15,47 @@ namespace restlessmedia.Module
   /// <typeparam name="TModule"></typeparam>
   public class ModuleLoader<TModule>
   {
+    /// <summary>
+    /// Loads modules automatically, or for the given assembly.
+    /// </summary>
+    /// <param name="factory"></param>
+    /// <param name="assembly"></param>
     public static void Load(Action<TModule> factory, Assembly assembly = null)
     {
-      if (AutoLoad)
-      {
-        if (assembly != null)
-        {
-          FindAndRegisterTypes(assembly);
-        }
-        else
-        {
-          FindAndRegisterTypes();
-        }
-      }
+      IEnumerable<Type> types = assembly != null ? FindModuleTypes(assembly) : FindModuleTypes();
 
-      foreach (Type moduleType in _modulesToLoad)
+      foreach (Type moduleType in types)
       {
         TModule module = CreateModule(moduleType);
         factory(module);
       }
     }
 
-    public static void Register<T>()
-      where T : TModule
+    /// <summary>
+    /// Finds module types by looking for .module files.
+    /// </summary>
+    /// <returns></returns>
+    private static IEnumerable<Type> FindModuleTypes()
     {
-      Register(typeof(T));
+      // look for .module files in the bin folder
+      string executingDirectory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase);
+      executingDirectory = executingDirectory.Replace("file:\\", "");
+      return Directory.GetFiles(executingDirectory, "*.module").SelectMany(FindModuleTypes);
     }
 
-    public static void Register(Type type)
+    private static IEnumerable<Type> FindModuleTypes(string pathToModuleFile)
     {
-      lock (_modulesToLoadLock)
-      {
-        if (!_modulesToLoad.Contains(type))
-        {
-          _modulesToLoad.Add(type);
-        }
-      }
+      string moduleFile = Path.GetFileName(pathToModuleFile);
+      string assemblyName = moduleFile.Replace(".module", string.Empty);
+      Assembly moduleAssembly = Assembly.Load(assemblyName);
+      return FindModuleTypes(moduleAssembly);
     }
 
-    public static bool AutoLoad = true;
-    
-    private static void FindAndRegisterTypes()
-    {
-      foreach (Assembly assembly in BuildManager.GetReferencedAssemblies().Cast<Assembly>())
-      {
-        FindAndRegisterTypes(assembly);
-      }
-    }
-
-    private static void FindAndRegisterTypes(Assembly assembly)
+    private static IEnumerable<Type> FindModuleTypes(Assembly assembly)
     {
       Type abstractModuleType = typeof(TModule);
       Trace.TraceInformation($"{abstractModuleType.FullName} module loader scanning {assembly.FullName} for {abstractModuleType.Name} types.");
-      foreach (Type moduleType in GetAssemblyTypes(assembly)
-        .Where(x => x != null && !x.IsAbstract && x != abstractModuleType && abstractModuleType.IsAssignableFrom(x)))
-      {
-        Register(moduleType);
-        Trace.TraceInformation($"Registering module components for {moduleType.FullName}.");
-      }
+      return GetAssemblyTypes(assembly).Where(x => x != null && !x.IsAbstract && x != abstractModuleType && abstractModuleType.IsAssignableFrom(x));
     }
 
     private static IEnumerable<Type> GetAssemblyTypes(Assembly assembly)
@@ -104,9 +87,5 @@ namespace restlessmedia.Module
     }
 
     private delegate TModule ModuleActivator();
-
-    private static IList<Type> _modulesToLoad = new List<Type>();
-
-    private static object _modulesToLoadLock = new object();
   }
 }

@@ -10,11 +10,11 @@ namespace restlessmedia.Module
   {
     public static void RegisterModules(ContainerBuilder containerBuilder)
     {
-      RegisterComponents(containerBuilder);
-      ModuleLoader<IModule>.Load(x => x.RegisterComponents(containerBuilder));
+      RegisterGlobalComponents(containerBuilder);
+      ModuleLoader<IModule>.Load(module => module.RegisterComponents(containerBuilder));
     }
 
-    internal static void RegisterComponents(ContainerBuilder containerBuilder)
+    internal static void RegisterGlobalComponents(ContainerBuilder containerBuilder)
     {
       #region settings
       containerBuilder.RegisterSettings<ILicenseSettings>("restlessmedia/license", required: true);

@@ -19,7 +19,7 @@ namespace restlessmedia.Module.UnitTest
       containerBuilder.RegisterType<TestConnectionFactory>().As<IConnectionFactory>();
 
       // build
-      ModuleBuilder.RegisterComponents(containerBuilder);
+      ModuleBuilder.RegisterGlobalComponents(containerBuilder);
 
       // assert
       containerBuilder.Build().Resolve<IConnectionFactory>().MustBeA<TestConnectionFactory>();

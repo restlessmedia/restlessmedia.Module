@@ -21,6 +21,19 @@ namespace restlessmedia.Module.UnitTest
       found.Count.MustBe(2);
     }
 
+    [Fact(Skip = "Need to find a way to test this")]
+    public void RegisterModules_finds_modules_automatically()
+    {
+      ContainerBuilder containerBuilder = new ContainerBuilder();
+      List<IModule> found = new List<IModule>();
+
+      // call
+      ModuleLoader<IModule>.Load(found.Add);
+
+      // assert
+      found.Count.MustBe(2);
+    }
+
     public class TestModule : IModule
     {
       public virtual void RegisterComponents(ContainerBuilder containerBuilder) { }
