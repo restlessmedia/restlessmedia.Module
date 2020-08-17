@@ -6,9 +6,9 @@
     <Product>restlessmedia.Module</Product>
     <Description>Base module library.</Description>
     <Copyright>Copyright restlessmedia 2020</Copyright>
-    <Version>7.0.0</Version>
-    <AssemblyVersion>7.0.0</AssemblyVersion>
-    <FileVersion>7.0.0</FileVersion>
+    <Version>7.0.1</Version>
+    <AssemblyVersion>7.0.1</AssemblyVersion>
+    <FileVersion>7.0.1</FileVersion>
     <OutputPath>bin\$(Configuration)\</OutputPath>
     <Authors>Phil Cooper</Authors>
     <PackageId>restlessmedia.Module</PackageId>
