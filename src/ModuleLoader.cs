@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using SqlBuilder.DataServices;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -36,15 +37,28 @@ namespace restlessmedia.Module
     }
 
     /// <summary>
-    /// Loads modules automatically, or for the given assembly.
+    /// Loads modules automatically, or for the given assembly that match the <paramref name="pattern"/>.
     /// </summary>
     /// <param name="factory"></param>
     /// <param name="pattern"></param>
     public static void Load(Action<TModule> factory, string pattern)
     {
-      foreach (Type moduleType in FindModuleTypes(pattern))
+      foreach (TModule module in FindModules(pattern))
       {
-        factory(CreateModule(moduleType));
+        factory(module);
+      }
+    }
+
+    /// <summary>
+    /// Finds modules by looking for files with given <paramref name="pattern"/>.
+    /// </summary>
+    /// <param name="pattern"></param>
+    /// <returns></returns>
+    public static IEnumerable<TModule> FindModules(string pattern)
+    {
+      foreach(Type moduleType in FindModuleTypes(pattern))
+      {
+        yield return CreateModule(moduleType);
       }
     }
 
