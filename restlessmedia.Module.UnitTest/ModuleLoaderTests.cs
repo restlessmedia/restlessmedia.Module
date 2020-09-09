@@ -72,6 +72,10 @@ namespace restlessmedia.Module.UnitTest
       A.CallTo(() => ModuleLoader.DirectoryGetFiles(A<string>.Ignored, A<string>.Ignored))
         .Returns(new string[] { @"c:\bin\test.module" });
 
+      // we fake the return assembly to be the current, test assembly. this is because we can't fake up the Assembly type due to ctor restrictions.
+      A.CallTo(() => ModuleLoader.AssemblyLoad("test"))
+        .Returns(Assembly.GetExecutingAssembly());
+
       // call & assert
 
       // finds 2 because we return the current assembly from AssemblyLoad (fake) which has two module classes.
