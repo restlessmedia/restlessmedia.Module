@@ -14,7 +14,7 @@ namespace restlessmedia.Module
   /// Used for find types in loaded assemblies.
   /// </summary>
   /// <typeparam name="TModule"></typeparam>
-  public class ModuleLoader<TModule>
+  public class ModuleLoader<TModule> : ModuleLoader
   {
     /// <summary>
     /// Loads modules automatically, or for the given assembly.
@@ -32,48 +32,52 @@ namespace restlessmedia.Module
       }
       else
       {
-        Load(factory, "*.module");
+        Load(factory, DefaultModuleExtension);
       }
     }
 
     /// <summary>
-    /// Loads modules automatically, or for the given assembly that match the <paramref name="pattern"/>.
+    /// Loads modules automatically, or for the given assembly that match the <paramref name="extension"/>.
     /// </summary>
+    /// <example>
+    /// Given SampleModule.module - when .module is passed in as the <paramref name="extension"/> would attempt to load a module called 'SampleModule'.
+    /// </example>
     /// <param name="factory"></param>
-    /// <param name="pattern"></param>
-    public static void Load(Action<TModule> factory, string pattern)
+    /// <param name="extension"></param>
+    public static void Load(Action<TModule> factory, string extension)
     {
-      foreach (TModule module in FindModules(pattern))
+      foreach (TModule module in FindModules(extension))
       {
         factory(module);
       }
     }
 
     /// <summary>
-    /// Finds modules by looking for files with given <paramref name="pattern"/>.
+    /// Finds modules by looking for files with given <paramref name="extension"/>.
     /// </summary>
-    /// <param name="pattern"></param>
+    /// <example>
+    /// Given SampleModule.module - when .module is passed in as the <paramref name="extension"/> would attempt to load a module called 'SampleModule'.
+    /// </example>
+    /// <param name="extension"></param>
     /// <returns></returns>
-    public static IEnumerable<TModule> FindModules(string pattern)
+    public static IEnumerable<TModule> FindModules(string extension)
     {
-      foreach(Type moduleType in FindModuleTypes(pattern))
+      foreach (Type moduleType in FindModuleTypes(extension))
       {
         yield return CreateModule(moduleType);
       }
     }
 
     /// <summary>
-    /// Finds module types by looking for .module files.
+    /// Finds module types by looking for files with the given <paramref name="extension"/>.
     /// </summary>
-    /// <param name="pattern"></param>
+    /// <param name="extension"></param>
     /// <returns></returns>
-    public static IEnumerable<Type> FindModuleTypes(string pattern)
+    public static IEnumerable<Type> FindModuleTypes(string extension)
     {
-      // look for .module files in the bin folder
-      string executingDirectory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase);
-      executingDirectory = executingDirectory.Replace("file:\\", "");
-      return Directory.GetFiles(executingDirectory, pattern)
-        .SelectMany(GetModuleTypes);
+      string pattern = string.Concat("*", GetExtension(extension));
+      return DirectoryGetFiles(ExecutingDirectory, pattern)
+        .SelectMany(path => GetModuleTypes(path, extension));
     }
 
     /// <summary>
@@ -81,11 +85,11 @@ namespace restlessmedia.Module
     /// </summary>
     /// <param name="pathToModuleFile"></param>
     /// <returns></returns>
-    private static IEnumerable<Type> GetModuleTypes(string pathToModuleFile)
+    private static IEnumerable<Type> GetModuleTypes(string pathToModuleFile, string extension)
     {
       string moduleFile = Path.GetFileName(pathToModuleFile);
-      string assemblyName = moduleFile.Replace(".module", string.Empty);
-      Assembly moduleAssembly = Assembly.Load(assemblyName);
+      string assemblyName = moduleFile.Replace(extension, string.Empty);
+      Assembly moduleAssembly = AssemblyLoad(assemblyName);
       return GetModuleTypes(moduleAssembly);
     }
 
@@ -125,5 +129,44 @@ namespace restlessmedia.Module
     }
 
     private delegate TModule ModuleActivator();
+  }
+
+  public class ModuleLoader
+  {
+    static ModuleLoader()
+    {
+      ExecutingDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase).Replace("file:\\", "");
+    }
+
+    /// <summary>
+    /// Factory method for returning file paths for a given directory path.
+    /// </summary>
+    internal static Func<string, string, string[]> DirectoryGetFiles = Directory.GetFiles;
+
+    /// <summary>
+    /// Factory method for returning an assembly for a given name.
+    /// </summary>
+    internal static Func<string, Assembly> AssemblyLoad = Assembly.Load;
+
+    protected readonly static string ExecutingDirectory;
+
+    protected const string DefaultModuleExtension = ".module";
+
+    protected static string GetExtension(string extension)
+    {
+      if (string.IsNullOrEmpty(extension))
+      {
+        throw new ArgumentNullException(nameof(extension), $"The extension passed into {nameof(ModuleLoader)} is null. Modules cannot be found with a null or empty extension.");
+      }
+
+      const string period = ".";
+
+      if (extension.StartsWith(period))
+      {
+        return extension;
+      }
+
+      return string.Concat(period, extension);
+    }
   }
 }
