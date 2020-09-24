@@ -2,6 +2,7 @@
 using StackExchange.Redis;
 using System;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace restlessmedia.Module.Caching
 {
@@ -19,12 +20,19 @@ namespace restlessmedia.Module.Caching
     {
       byte[] result = WithDatabase(database => database.StringGet(key));
 
-      if (result == null)
+      if (result != null)
       {
-        return default;
+        try
+        {
+          return Deserialize<T>(result);
+        }
+        catch (SerializationException)
+        {
+          Remove(key);
+        }
       }
 
-      return Deserialize<T>(result);
+      return default;
     }
 
     /// <summary>
