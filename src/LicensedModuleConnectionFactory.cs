@@ -13,13 +13,15 @@ namespace restlessmedia.Module
       _licenseSettings = licenseSettings ?? throw new ArgumentNullException(nameof(licenseSettings));
     }
 
-    public override IDbConnection CreateConnection(bool open = false)
+    public override IDbConnection CreateConnection(bool open = true)
     {
       IDbConnection connection = base.CreateConnection(open);
+
       if (open)
       {
         LicenseHelper.SetContext(connection, _licenseSettings);
       }
+
       return connection;
     }
 
