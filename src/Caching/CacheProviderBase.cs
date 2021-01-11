@@ -20,36 +20,6 @@ namespace restlessmedia.Module.Caching
 
     public abstract void Add<T>(string key, T value, TimeSpan? expiry = null);
 
-    public virtual bool TryAdd<T>(string key, T value, TimeSpan? expiry = null)
-    {
-      try
-      {
-        Add(key, value, expiry);
-        return true;
-      }
-      catch(Exception e)
-      {
-        Log.Exception(e);
-        return false;
-      }
-    }
-
-    public virtual bool TryGet<T>(string key, Func<T> valueProvider, out T value, TimeSpan? expiry = null)
-      where T : class
-    {
-      try
-      {
-        value = Get<T>(key, valueProvider, expiry);
-        return true;
-      }
-      catch (Exception e)
-      {
-        value = default(T);
-        Log.Exception(e);
-        return false;
-      }
-    }
-
     public virtual T Get<T>(string key, Func<T> valueProvider, TimeSpan? expiry = null)
       where T : class
     {
@@ -68,7 +38,7 @@ namespace restlessmedia.Module.Caching
         }
       }
 
-      // if it's not null (default), return it
+      // if the result from the cahce is not null (default), return it
       if (!EqualityComparer<T>.Default.Equals(result, default))
       {
         return result;
@@ -76,10 +46,10 @@ namespace restlessmedia.Module.Caching
 
       result = valueProvider();
 
-      if (!ReferenceEquals(result, null))
+      // if the result from the valueProvider is not null, add it
+      if (result is object)
       {
-        // if it's not null, try to add it
-        TryAdd(key, result, expiry);
+        Add(key, result, expiry);
       }
 
       return result;

@@ -44,6 +44,23 @@ namespace restlessmedia.Module.UnitTest.Caching
       A.CallTo(() => database.KeyDelete("test", A<CommandFlags>.Ignored)).MustHaveHappened();
     }
 
+    [Fact]
+    public void get_adds_from_valueprovider_when_not_initially_found_in_cache()
+    {
+      // set-up
+      IDatabase database = A.Fake<IDatabase>();
+      object valueToCache = 4;
+
+      A.CallTo(() => _databaseFactory()).Returns(database);
+      A.CallTo(() => database.StringGet(A<RedisKey>.Ignored, A<CommandFlags>.Ignored)).Returns((byte[])null);
+
+      // call
+      _cacheProvider.Get("test", () => valueToCache);
+
+      // assert
+      A.CallTo(() => database.StringSet("test", A<RedisValue>.Ignored, A<TimeSpan?>.Ignored, A<When>.Ignored, A<CommandFlags>.Ignored)).MustHaveHappened();
+    }
+
     private readonly RedisCacheProvider _cacheProvider;
 
     private readonly Func<IDatabase> _databaseFactory;

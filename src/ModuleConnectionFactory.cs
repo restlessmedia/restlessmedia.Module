@@ -1,6 +1,5 @@
 ﻿using restlessmedia.Module.Configuration;
 using SqlBuilder.DataServices;
-using System.Data;
 
 namespace restlessmedia.Module
 {
@@ -8,10 +7,5 @@ namespace restlessmedia.Module
   {
     public ModuleConnectionFactory(IDatabaseSettings databaseSettings)
       : base(databaseSettings.ConnectionString.ConnectionString) { }
-
-    public override IDbTransaction CreateTransaction(bool open = true)
-    {
-      return base.CreateTransaction(open);
-    }
   }
 }

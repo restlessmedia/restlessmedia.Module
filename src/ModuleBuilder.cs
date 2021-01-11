@@ -10,18 +10,20 @@ namespace restlessmedia.Module
   {
     public static void RegisterModules(ContainerBuilder containerBuilder)
     {
+      RegisterSettings(containerBuilder);
       RegisterGlobalComponents(containerBuilder);
       ModuleLoader<IModule>.Load(module => module.RegisterComponents(containerBuilder));
     }
 
-    internal static void RegisterGlobalComponents(ContainerBuilder containerBuilder)
+    internal static void RegisterSettings(ContainerBuilder containerBuilder)
     {
-      #region settings
       containerBuilder.RegisterSettings<ILicenseSettings>("restlessmedia/license", required: true);
       containerBuilder.RegisterSettings<IDatabaseSettings>("restlessmedia/database", required: true);
       containerBuilder.RegisterSettings<ICacheSettings>("restlessmedia/cache");
-      #endregion
+    }
 
+    internal static void RegisterGlobalComponents(ContainerBuilder containerBuilder)
+    {
       // default log - trace
       // we can add support for making this configurable so you could
       // load another type to provide the implementation

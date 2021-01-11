@@ -26,9 +26,7 @@ namespace restlessmedia.Module
 
     public static Stream GetResourceStream(Assembly assembly, string resource)
     {
-      Stream stream;
-
-      if (!Exists(assembly, resource, out stream))
+      if (!Exists(assembly, resource, out Stream stream))
       {
         throw new FileNotFoundException($"No resource matching '{resource}' could be found in assembly '{assembly.FullName}'.");
       }
