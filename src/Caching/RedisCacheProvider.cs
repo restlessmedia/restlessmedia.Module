@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 
 namespace restlessmedia.Module.Caching
 {
-  internal class RedisCacheProvider : CacheProviderBase, ICacheProvider, IDisposable
+  public class RedisCacheProvider : CacheProviderBase, ICacheProvider, IDisposable
   {
     public RedisCacheProvider(ICacheSettings cacheSettings, ILog log)
       : base(cacheSettings, log)
