@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 
 namespace restlessmedia.Module.Caching
 {
-  public class RedisCacheProvider : CacheProviderBase, ICacheProvider, IDisposable
+  internal class RedisCacheProvider : CacheProviderBase, ICacheProvider, IDisposable
   {
     public RedisCacheProvider(ICacheSettings cacheSettings, ILog log)
       : base(cacheSettings, log)
@@ -101,13 +101,7 @@ namespace restlessmedia.Module.Caching
     {
       if (_connection == null)
       {
-        lock (_connectionLock)
-        {
-          if (_connection == null)
-          {
-            _connection = ConnectionMultiplexer.Connect(GetOptions(CacheSettings));
-          }
-        }
+        _connection = ConnectionMultiplexer.Connect(GetOptions(CacheSettings));
       }
 
       return _connection;
@@ -167,8 +161,6 @@ namespace restlessmedia.Module.Caching
 
     private readonly Func<IDatabase> _databaseFactory;
 
-    private static readonly object _connectionLock = new object();
-
-    private static ConnectionMultiplexer _connection;
+    private ConnectionMultiplexer _connection;
   }
 }

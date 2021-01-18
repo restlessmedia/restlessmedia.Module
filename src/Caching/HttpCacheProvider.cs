@@ -4,7 +4,7 @@ using System.Web;
 
 namespace restlessmedia.Module.Caching
 {
-  public class HttpCacheProvider : CacheProviderBase, ICacheProvider
+  internal class HttpCacheProvider : CacheProviderBase, ICacheProvider
   {
     public HttpCacheProvider(ICacheSettings cacheSettings, ILog log)
       : base(cacheSettings, log) { }
