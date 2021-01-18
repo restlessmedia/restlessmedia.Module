@@ -7,7 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace restlessmedia.Module.Caching
 {
-  internal abstract class CacheProviderBase
+  public abstract class CacheProviderBase
   {
     public CacheProviderBase(ICacheSettings cacheSettings, ILog log)
     {
