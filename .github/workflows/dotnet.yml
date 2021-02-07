@@ -17,11 +17,8 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.x
-    - name: Install NuGet client
-      uses: warrenbuckley/Setup-Nuget@v1
-    - name: restore package
-      run: |
-        nuget sources add -name "private-packages" -Source https://ci.appveyor.com/nuget/restlessmedia-fqb6idr6vwjb -ApiKey ${env:ApiKey}
+    - name: Private packages
+      run: dotnet nuget add source https://ci.appveyor.com/nuget/restlessmedia-fqb6idr6vwjb -ApiKey ${env:ApiKey}
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
