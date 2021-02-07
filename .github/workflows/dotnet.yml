@@ -18,7 +18,7 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Private packages
-      run: dotnet nuget add source https://ci.appveyor.com/nuget/restlessmedia-fqb6idr6vwjb -name AppVeyorFeed -u ${env:AppVeyorUserName} -u ${env:AppVeyorPassword}
+      run: dotnet nuget add source https://ci.appveyor.com/nuget/restlessmedia-fqb6idr6vwjb -n AppVeyorFeed -u ${env:AppVeyorUserName} -u ${env:AppVeyorPassword}
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
