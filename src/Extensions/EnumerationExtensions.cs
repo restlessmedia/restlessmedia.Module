@@ -16,8 +16,7 @@ namespace System
     public static string GetDescription(this Enum value)
     {
       FieldInfo field = value.GetType().GetField(value.ToString());
-      DescriptionAttribute attribute = Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) as DescriptionAttribute;
-      if (attribute != null)
+      if (Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) is DescriptionAttribute attribute)
       {
         return attribute.Description;
       }

@@ -20,16 +20,12 @@ namespace restlessmedia.Module.Data
         return value;
       }
 
-      switch (match)
+      return match switch
       {
-        case SqlLikeMatch.Left:
-          return string.Concat("%", value);
-        case SqlLikeMatch.Right:
-          return string.Concat(value, "%");
-        default:
-        case SqlLikeMatch.Both:
-          return string.Concat("%", value, "%");
-      }
+        SqlLikeMatch.Left => string.Concat("%", value),
+        SqlLikeMatch.Right => string.Concat(value, "%"),
+        _ => string.Concat("%", value, "%"),
+      };
     }
   }
 }

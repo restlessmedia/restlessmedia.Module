@@ -65,15 +65,12 @@ namespace restlessmedia.Module.Extensions
     /// <returns></returns>
     public static object GetMemberValue(this MemberInfo member, object target)
     {
-      switch (member.MemberType)
+      return member.MemberType switch
       {
-        case MemberTypes.Field:
-          return ((FieldInfo)member).GetValue(target);
-        case MemberTypes.Property:
-          return ((PropertyInfo)member).GetValue(target);
-        default:
-          throw new ArgumentException("MemberInfo must be of type FieldInfo or PropertyInfo", "member");
-      }
+        MemberTypes.Field => ((FieldInfo)member).GetValue(target),
+        MemberTypes.Property => ((PropertyInfo)member).GetValue(target),
+        _ => throw new ArgumentException("MemberInfo must be of type FieldInfo or PropertyInfo", "member"),
+      };
     }
 
     /// <summary>

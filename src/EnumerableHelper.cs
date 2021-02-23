@@ -6,7 +6,7 @@ namespace restlessmedia.Module
   {
     public static IEnumerable<int> Range(int from, int to, int step)
     {
-      for (int current = from; current < to; current = current + step)
+      for (int current = from; current < to; current += step)
       {
         yield return current;
       }

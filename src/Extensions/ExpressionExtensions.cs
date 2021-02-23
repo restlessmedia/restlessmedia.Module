@@ -38,18 +38,16 @@ namespace restlessmedia.Module.Extensions
       MemberExpression memberExpression = null;
 
       // this line is necessary, because sometimes the expression comes in as Convert(originalexpression)
-      if (expression.Body is UnaryExpression)
+      if (expression.Body is UnaryExpression unaryExpression)
       {
-        UnaryExpression unaryExpression = (UnaryExpression)expression.Body;
-
-        if (unaryExpression.Operand is MemberExpression)
+        if (unaryExpression.Operand is MemberExpression expression1)
         {
-          memberExpression = (MemberExpression)unaryExpression.Operand;
+          memberExpression = expression1;
         }
       }
-      else if (expression.Body is MemberExpression)
+      else if (expression.Body is MemberExpression expression1)
       {
-        memberExpression = (MemberExpression)expression.Body;
+        memberExpression = expression1;
       }
 
       return memberExpression?.Member;

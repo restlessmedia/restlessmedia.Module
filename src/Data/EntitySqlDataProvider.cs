@@ -12,19 +12,19 @@ namespace restlessmedia.Module.Data
     public byte GetNextRank(EntityType sourceType, EntityType targetType, int sourceEntityId)
     {
       const string commandName = "dbo.SPEntityNextRank";
-      return Query<byte>(commandName, new { sourceEntityType = (int)sourceType, targetEntityType = (int)targetType, sourceEntityId = sourceEntityId }).FirstOrDefault();
+      return Query<byte>(commandName, new { sourceEntityType = (int)sourceType, targetEntityType = (int)targetType, sourceEntityId }).FirstOrDefault();
     }
 
     public void Move(EntityType sourceType, EntityType targetType, int sourceEntityId, int targetEntityId, MoveDirection direction)
     {
       const string commandName = "dbo.SPEntityMoveRank";
-      Execute(commandName, new { sourceEntityType = (int)sourceType, targetEntityType = (int)targetType, sourceEntityId = sourceEntityId, targetEntityId = targetEntityId, directionFlag = (byte)direction });
+      Execute(commandName, new { sourceEntityType = (int)sourceType, targetEntityType = (int)targetType, sourceEntityId, targetEntityId, directionFlag = (byte)direction });
     }
 
     public void AutoRank(EntityType sourceType, EntityType targetType, int sourceEntityId)
     {
       const string commandName = "dbo.SPEntityAutoRank";
-      Execute(commandName, new { sourceEntityType = (int)sourceType, targetEntityType = (int)targetType, sourceEntityId = sourceEntityId });
+      Execute(commandName, new { sourceEntityType = (int)sourceType, targetEntityType = (int)targetType, sourceEntityId });
     }
 
     public DateTime? UpdatedDate(EntityType entityType, int entityId)

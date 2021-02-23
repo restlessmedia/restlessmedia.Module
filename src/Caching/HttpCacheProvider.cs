@@ -24,7 +24,7 @@ namespace restlessmedia.Module.Caching
     public override T Get<T>(string key)
     {
       object result = HttpContext.Cache.Get(key);
-      return result is T ? (T)result : default(T);
+      return result is T t ? t : default(T);
     }
 
     public void Remove(string key)
@@ -41,7 +41,7 @@ namespace restlessmedia.Module.Caching
     {
       get
       {
-        return _httpContext = _httpContext ?? new HttpContextWrapper(System.Web.HttpContext.Current);
+        return _httpContext ??= new HttpContextWrapper(System.Web.HttpContext.Current);
       }
     }
 

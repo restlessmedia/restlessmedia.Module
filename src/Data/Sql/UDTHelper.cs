@@ -10,11 +10,6 @@ namespace restlessmedia.Module.Data.Sql
 {
   public static class UDTHelper
   {
-    static UDTHelper()
-    {
-      _cache = new Cache();
-    }
-
     public static SqlMetaData[] GetSqlMetaData(object obj)
     {
       return GetSqlMetaData(obj.GetType());
@@ -101,8 +96,6 @@ namespace restlessmedia.Module.Data.Sql
     {
       return GetAttribute<MetaData>(property, true);
     }
-
-    private static readonly Cache _cache;
 
     private class Cache
     {

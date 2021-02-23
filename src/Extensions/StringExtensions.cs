@@ -106,9 +106,10 @@ namespace restlessmedia.Module.Extensions
       return Convert.ToBase64String(Encoding.ASCII.GetBytes(value));
     }
 
-    public static bool Contains(this string value, string toCheck, bool ignoreCase)
+    public static bool Contains(this string value, string toCheck, bool ignoreCase = true)
     {
-      return Contains(value, toCheck, StringComparison.OrdinalIgnoreCase);
+      StringComparison stringComparison = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.CurrentCulture;
+      return Contains(value, toCheck, stringComparison);
     }
 
     public static bool Contains(this string value, string toCheck, StringComparison comp)
@@ -221,7 +222,7 @@ namespace restlessmedia.Module.Extensions
       return Regex.Replace(string.Concat(value, backslash, string.Join(backslash, parts)), pattern, backslash);
     }
 
-    public static string Pad(this string value, string padChar, int totalWidth = 1)
+    public static string Pad(this string value, string padChar)
     {
       if (string.IsNullOrEmpty(value))
       {
@@ -245,8 +246,7 @@ namespace restlessmedia.Module.Extensions
 
       const string pattern = "[^0-9]*";
       string strippedValue = Regex.Replace(value, pattern, string.Empty);
-      int parseResult;
-      return int.TryParse(strippedValue, out parseResult) ? parseResult : (int?)null;
+      return int.TryParse(strippedValue, out int parseResult) ? parseResult : (int?)null;
     }
 
     public static string Unquote(this string value)

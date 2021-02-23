@@ -24,7 +24,7 @@ namespace System.Collections.Generic
         throw new ArgumentNullException(nameof(comparer));
       }
 
-      comparer = comparer ?? EqualityComparer<T>.Default;
+      comparer ??= EqualityComparer<T>.Default;
       var found = obj.Select((a, i) => new { a, i }).FirstOrDefault(x => comparer.Equals(x.a, value));
       return found == null ? -1 : found.i;
     }
@@ -187,7 +187,7 @@ namespace System.Collections.Generic
 
     public static IEnumerable<int> Range(int from, int to, int step = 1)
     {
-      for (int i = from; i <= to; i = i + step)
+      for (int i = from; i <= to; i += step)
       {
         yield return i;
       }

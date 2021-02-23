@@ -12,7 +12,8 @@ namespace restlessmedia.Module
     public ModelCollection()
       : this(0) { }
 
-    public ModelCollection(int capacity) { }
+    public ModelCollection(int capacity)
+      : base(capacity) { }
 
     public ModelCollection(IEnumerable<T> collection, Paging paging)
       : base(collection)
@@ -30,7 +31,7 @@ namespace restlessmedia.Module
      : this(collection, new Paging(totalCount)) { }
 
     public ModelCollection(IEnumerable<T> collection, int totalCount, int page)
-     : this(collection, new Paging(totalCount)) { }
+     : this(collection, new Paging(totalCount, page)) { }
 
     public static ModelCollection<T> One(T item)
     {

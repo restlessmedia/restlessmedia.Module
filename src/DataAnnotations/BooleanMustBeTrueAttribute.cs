@@ -7,8 +7,8 @@ namespace restlessmedia.Module.DataAnnotations
     public override bool IsValid(object propertyValue)
     {
       return propertyValue != null
-          && propertyValue is bool
-          && (bool)propertyValue;
+          && propertyValue is bool boolean
+          && boolean;
     }
   }
 }

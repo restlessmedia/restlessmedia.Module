@@ -19,9 +19,10 @@ namespace restlessmedia.Module.UnitTest
     {
       int totalCount = 8;
       int maxPerPage = 4;
-      Paging paging = new Paging(totalCount);
-
-      paging.MaxPerPage = maxPerPage;
+      Paging paging = new Paging(totalCount)
+      {
+        MaxPerPage = maxPerPage
+      };
 
       paging.Pages.MustBe(2);
     }
@@ -31,9 +32,10 @@ namespace restlessmedia.Module.UnitTest
     {
       int totalCount = 11;
       int maxPerPage = 3;
-      Paging paging = new Paging(totalCount);
-
-      paging.MaxPerPage = maxPerPage;
+      Paging paging = new Paging(totalCount)
+      {
+        MaxPerPage = maxPerPage
+      };
 
       paging.Pages.MustBe(4);
     }
@@ -43,10 +45,11 @@ namespace restlessmedia.Module.UnitTest
     {
       int totalCount = 10;
       int maxPerPage = 5;
-      Paging paging = new Paging(totalCount);
-
-      paging.MaxPerPage = maxPerPage;
-      paging.Page = 2;
+      Paging paging = new Paging(totalCount)
+      {
+        MaxPerPage = maxPerPage,
+        Page = 2
+      };
 
       paging.IsLastPage.MustBeTrue();
     }
@@ -56,10 +59,11 @@ namespace restlessmedia.Module.UnitTest
     {
       int totalCount = 10;
       int maxPerPage = 5;
-      Paging paging = new Paging(totalCount);
-
-      paging.MaxPerPage = maxPerPage;
-      paging.Page = 1;
+      Paging paging = new Paging(totalCount)
+      {
+        MaxPerPage = maxPerPage,
+        Page = 1
+      };
 
       paging.IsFirstPage.MustBeTrue();
     }

@@ -15,9 +15,7 @@ namespace restlessmedia.Module
 
     public void Publish(string channel, string argument = null)
     {
-      Action<object> handler;
-
-      if (_store.TryGetValue(channel, out handler))
+      if (_store.TryGetValue(channel, out Action<object> handler))
       {
         handler(argument);
       }
@@ -25,8 +23,7 @@ namespace restlessmedia.Module
 
     public void Unsubscribe(string channel)
     {
-      Action<object> handler;
-      _store.TryRemove(channel, out handler);
+      _store.TryRemove(channel, out Action<object> handler);
     }
 
     public void Subscribe(string channel, Action<object> handler)
@@ -34,6 +31,6 @@ namespace restlessmedia.Module
       _store.AddOrUpdate(channel, handler, (c, h) => handler);
     }
 
-    private static ConcurrentDictionary<string, Action<object>> _store;
+    private static readonly ConcurrentDictionary<string, Action<object>> _store;
   }
 }
